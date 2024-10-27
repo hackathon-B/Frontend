@@ -1,2 +1,2 @@
-# Frontend
+# frontend
 フロントエンド用のリポジトリ
