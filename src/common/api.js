@@ -1,10 +1,11 @@
 import axios from 'axios';
+import { BASE_URL } from '../common/constants';
 
-export async function callApi( method, url, data = null ) {
+export async function callApi( method, endpoint, data = null ) {
     try {
         const response = await axios({
             method:method,
-            url:url,
+            url:`${BASE_URL}${endpoint}`,
             data:data,
         });
         return response.data

@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { callApi } from '../api.js';
+import { useCookies } from 'react-cookie';
+import { callApi } from '../common/api.js';
 
 function LoginPage() {
     const [email,setEmail] = useState("");
@@ -9,8 +10,11 @@ function LoginPage() {
 
     async function login(email,password){
         try {
-            const response = await callApi(post,login,[email,password])
-            //トークンを受け取ってstateに保存
+            const response = await callApi('POST', `${BASE_URL}${API_URLS.LOGIN}`, {
+                email,
+                password,
+              });
+            return response; //トークン受け取る
         } catch(error){
             console.error(error)
         }
@@ -19,15 +23,15 @@ function LoginPage() {
     return (
         <>
             <div className="flex flex-col">
-                <label　for="email">Email</label>
+                <label　htmlfor="email">Email</label>
                 <input id="email" type="email" placeholder="Email" onChange={e => setEmail(e.target.value)}/>
             </div>
             <div className="flex flex-row">
-                <label for="password">Password</label>
+                <label htmlfor="password">Password</label>
                 <input id="password" type="password" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
             </div>
             <div>
-                <button type="submit"　onclick={login(email,password)}> Login </button>
+                <button type="submit"　onclick={() => login(email,password)}> Login </button>
             </div>
         </>
     );
