@@ -1,9 +1,10 @@
 import React from 'react';
+import callApi from '../api.js';
 
-function Login() {
+function LoginPage() {
     return (
         <>
-        <h1 className='text-blue-500'>hogehoge</h1>
+            <h1 className='text-blue-500'>hogehoge</h1>
             <div className="flex flex-col">
                 <label　for="email">Email</label>
                 <input id="email" type="email" placeholder="Email" />
@@ -19,4 +20,12 @@ function Login() {
     );
 };
 
-export default Login;
+export default LoginPage;
+
+async function login(email,password){
+    try {
+        const response = await callApi(post,login,[email,password])
+    } catch(error){
+        console.error(error)
+    }
+}

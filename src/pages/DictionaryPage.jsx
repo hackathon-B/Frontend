@@ -1,13 +1,13 @@
 import React from 'react';
 
-function NotFound() {
+function DictionaryPage() {
     return (
         <>
             <div>
-                <h1>ここはNotFound</h1>
+                <h1>ここはDictionaryPage</h1>
             </div>
         </>
     );
 };
 
-export default NotFound;
+export default DictionaryPage;

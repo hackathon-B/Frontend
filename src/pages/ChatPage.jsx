@@ -1,13 +1,13 @@
 import React from 'react';
 
-function User() {
+function ChatPage() {
     return (
         <>
             <div>
-                <h1>ここはUser</h1>
+                <h1>ここはChatPage</h1>
             </div>
         </>
     );
 };
 
-export default User;
+export default ChatPage;

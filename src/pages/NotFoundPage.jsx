@@ -1,13 +1,13 @@
 import React from 'react';
 
-function Chat() {
+function NotFoundPage() {
     return (
         <>
             <div>
-                <h1>ここはChat</h1>
+                <h1>ここはNotFoundPage</h1>
             </div>
         </>
     );
 };
 
-export default Chat;
+export default NotFoundPage;

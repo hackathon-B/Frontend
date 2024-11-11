@@ -1,13 +1,13 @@
 import React from 'react';
 
-function Dictionary() {
+function UserPage() {
     return (
         <>
             <div>
-                <h1>ここはDictionary</h1>
+                <h1>ここはUserPage</h1>
             </div>
         </>
     );
 };
 
-export default Dictionary;
+export default UserPage;
