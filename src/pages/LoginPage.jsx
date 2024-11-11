@@ -1,5 +1,5 @@
 import React from 'react';
-import callApi from '../api.js';
+import { callApi } from '../api.js';
 
 function LoginPage() {
     return (

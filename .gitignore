@@ -1,0 +1,43 @@
+# Node.js依存関係
+node_modules/
+npm-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Viteのキャッシュ
+.vite/
+
+# 環境変数ファイル
+.env
+.env.local
+.env.*.local
+
+# OS依存ファイル
+.DS_Store
+Thumbs.db
+
+# エディタ/IDE設定
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Tailwind CSSの一時ファイル（もし生成される場合）
+tailwind.config.js
+tailwind.config.cjs
+
+# ログファイル
+logs/
+*.log
+
+# npmやyarnの一時ファイル
+.pnpm-debug.log*
+.yarn-integrity
+.yarn-cache/
+
+# Coverageディレクトリ
+coverage/
+
+# Axios関連（特にありませんが、APIキーが含まれる可能性のあるファイルは個別に指定）
+# 以下に他の追加が必要な場合
