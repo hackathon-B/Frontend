@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { callApi } from '../common/api.js';
+import { Box, TextField, Button, Typography, Paper } from '@mui/material';
+
 
 function LoginPage() {
     const [email,setEmail] = useState("");
@@ -22,17 +24,53 @@ function LoginPage() {
 
     return (
         <>
-            <div className="flex flex-col">
-                <label　htmlfor="email">Email</label>
-                <input id="email" type="email" placeholder="Email" onChange={e => setEmail(e.target.value)}/>
-            </div>
-            <div className="flex flex-row">
-                <label htmlfor="password">Password</label>
-                <input id="password" type="password" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
-            </div>
-            <div>
-                <button type="submit"　onclick={() => login(email,password)}> Login </button>
-            </div>
+            <Box className="p-4" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+                <Paper elevation={3} className="p-8 max-w-md mx-auto" sx={{ marginTop: 8 }}>
+                    <Typography variant="h5" gutterBottom sx={{ paddingBottom: '2rem' }}>
+                        Login with e-mail
+                    </Typography>
+
+                    <Box component="form" className="space-y-4" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <TextField
+                            id="email"
+                            label="e-mail"
+                            variant="outlined"
+                            type="email"
+                            onChange={e => setEmail(e.target.value)}
+                            fullWidth
+                            required
+                            InputLabelProps={{ required: false }}
+                            sx={{ '& .MuiInputBase-input': { padding: '1ex' }}}
+                        />
+
+                        <TextField
+                            id="password"
+                            label="password"
+                            variant="outlined"
+                            type="password"
+                            onChange={e => setPassword(e.target.value)}
+                            fullWidth
+                            required
+                            InputLabelProps={{ required: false }}
+                            sx={{ '& .MuiInputBase-input': { padding: '1ex' }}}
+
+                        />
+
+                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1, marginTop: 2 }}>
+                            <Button variant="contained" color="primary" type="submit" sx={{ width: '16em' }}>
+                                Login
+                            </Button>
+                            <Typography
+                                component="a"
+                                href="#"
+                                className="text-sm text-blue-500 underline hover:text-blue-700"
+                            >
+                                パスワードを忘れた方はこちら
+                            </Typography>
+                        </Box>
+                    </Box>
+                </Paper>
+            </Box>
         </>
     );
 };
