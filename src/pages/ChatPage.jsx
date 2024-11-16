@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Split from 'split.js';
 import Header from '../components/Header'
 import ChatWindow from '../components/ChatWindow'
 import ChatList from '../components/ChatList'
@@ -13,6 +14,17 @@ function ChatPage() {
     const [chatContent1, setChatContent1] = useState('Content for Button 1');
     const [chatContent2, setChatContent2] = useState('Content for Button 2');
 
+    useEffect(() => {
+        if (showChatWindow2) {
+            Split(['#chatWindow1', '#chatWindow2'], {
+                sizes: [50, 50],
+                minSize: 100,
+                gutterSize: 10,
+                cursor: 'col-resize',
+            });
+        }
+    }, []);
+
     const toggleDrawer = (isOpen) => (event) => {
       if (
         event.type === 'keydown' &&
@@ -24,12 +36,17 @@ function ChatPage() {
       setOpen(isOpen);
     };
 
+    
+
     return (
+      <>
         <Container maxWidth="xl" sx={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+            
             <Header />
-            <Box sx={{ flex: 1, display: 'flex', flexDirection: 'row', overflow: 'hidden' }}>
+
+            <Box sx={{ height: 'calc(100vh - 40px)', display: 'flex', flexDirection: 'row', overflow: 'hidden' }}>
                 <Button onClick={toggleDrawer(true)}>Sidebar</Button>
-                
+                <Button onClick={() => setShowChatWindow2(prevState => !prevState)}>ChatAdd</Button>
                 <Drawer
                     open={open}
                     onClose={toggleDrawer(false)}
@@ -43,20 +60,17 @@ function ChatPage() {
                     <DictionaryList />
                 </Drawer>
                 
-                <Box sx={{ flexGrow: 1, overflowY: 'auto' }}>
+                <div id="chatWindow1" style={{ flexGrow: 1 }}>
                     <ChatWindow content={chatContent1} />
-                </Box>
-
-                <Box sx={{ flexGrow: 1, overflowY: 'auto' }}>
-                    <Button onClick={() => {
-                        setShowChatWindow2(!showChatWindow2);
-                    }}>
-                        {showChatWindow2 ? 'Hide ChatWindow 2' : 'Show ChatWindow 2'}
-                    </Button>
-                    {showChatWindow2 && <ChatWindow content={chatContent2} />}
-                </Box>
+                </div>
+                {showChatWindow2 && (
+                    <div id="chatWindow2" style={{ flexGrow: 1 }}>
+                        <ChatWindow content={chatContent2} />
+                    </div>
+                )}
             </Box>
         </Container>
+      </>
     );
 };
 
