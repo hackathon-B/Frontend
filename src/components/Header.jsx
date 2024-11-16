@@ -20,7 +20,7 @@ function Header() {
 
   return (
     <>
-        <AppBar position="fixed" color="primary">
+        <AppBar position="fixed" color="primary" sx={{ height: '40px' }}>
             <Toolbar sx={{ justifyContent: 'flex-end', paddingRight: '32px' }}>
 
                 <a> ここにemailを表示 </a>

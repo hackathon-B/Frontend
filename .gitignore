@@ -23,9 +23,7 @@ Thumbs.db
 *.sublime-project
 *.sublime-workspace
 
-# Tailwind CSSの一時ファイル（もし生成される場合）
-tailwind.config.js
-tailwind.config.cjs
+# Tailwind CSSの設定ファイルはバージョン管理に含めるのが推奨されるため、除外対象から外すべきです。
 
 # ログファイル
 logs/
@@ -38,6 +36,3 @@ logs/
 
 # Coverageディレクトリ
 coverage/
-
-# Axios関連（特にありませんが、APIキーが含まれる可能性のあるファイルは個別に指定）
-# 以下に他の追加が必要な場合
