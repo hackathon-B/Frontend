@@ -24,13 +24,14 @@ function LoginPage() {
 
     return (
         <>
-            <Box className="p-4" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
-                <Paper elevation={3} className="p-8 max-w-md mx-auto" sx={{ marginTop: 8 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+                <Paper elevation={3} sx={{ marginTop: 8 }}>
+
                     <Typography variant="h5" gutterBottom sx={{ paddingBottom: '2rem' }}>
                         Login with e-mail
                     </Typography>
 
-                    <Box component="form" className="space-y-4" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <Box component="form" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <TextField
                             id="email"
                             label="e-mail"
@@ -53,21 +54,23 @@ function LoginPage() {
                             required
                             InputLabelProps={{ required: false }}
                             sx={{ '& .MuiInputBase-input': { padding: '1ex' }}}
-
                         />
 
                         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1, marginTop: 2 }}>
+
                             <Button variant="contained" color="primary" type="submit" sx={{ width: '16em' }}>
                                 Login
                             </Button>
+
                             <Typography
                                 component="a"
                                 href="#"
-                                className="text-sm text-blue-500 underline hover:text-blue-700"
                             >
                                 パスワードを忘れた方はこちら
                             </Typography>
+
                         </Box>
+
                     </Box>
                 </Paper>
             </Box>
