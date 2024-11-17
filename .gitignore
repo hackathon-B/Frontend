@@ -23,10 +23,6 @@ Thumbs.db
 *.sublime-project
 *.sublime-workspace
 
-# Tailwind CSSの一時ファイル（もし生成される場合）
-tailwind.config.js
-tailwind.config.cjs
-
 # ログファイル
 logs/
 *.log
