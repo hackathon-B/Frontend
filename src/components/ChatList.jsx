@@ -1,6 +1,6 @@
 import { Box, Drawer } from '@mui/material';
 
-function ChatList() {
+const ChatList = () => {    
   return (
     <>
         <Box>
@@ -8,11 +8,11 @@ function ChatList() {
         </Box>
         <Box
             sx={{
-                    width: '100%',
-                    backgroundColor: '#e0e0e0',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    overflowY: 'auto'
+                width: '100%',
+                backgroundColor: '#e0e0e0',
+                display: 'flex',
+                flexDirection: 'column',
+                overflowY: 'auto'
             }}
         >
             <a>チャットリスト</a>

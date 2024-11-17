@@ -7,7 +7,7 @@ import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 
 
-function Header() {
+const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleMenuOpen = (event) => {
@@ -20,8 +20,8 @@ function Header() {
 
   return (
     <>
-        <AppBar position="fixed" color="primary" sx={{ height: '40px' }}>
-            <Toolbar sx={{ justifyContent: 'flex-end', alignItems: 'center', padding: '0 16px', minHeight: '40px' }}>
+        <AppBar position="relative" color="primary" sx={{ height: '40px' }}>
+            <Toolbar sx={{ justifyContent: 'flex-end', alignItems: 'center', minHeight: '40px' }}>
                 <div>ここにemailを表示</div>
 
                 <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleMenuOpen}>

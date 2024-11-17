@@ -1,6 +1,6 @@
 import React from 'react'
 
-function DictionaryList() {
+const DictionaryList = () => {
   return (
     <div>DictionaryList</div>
   )
