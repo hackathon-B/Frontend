@@ -21,9 +21,8 @@ function Header() {
   return (
     <>
         <AppBar position="fixed" color="primary" sx={{ height: '40px' }}>
-            <Toolbar sx={{ justifyContent: 'flex-end', paddingRight: '32px' }}>
-
-                <a> ここにemailを表示 </a>
+            <Toolbar sx={{ justifyContent: 'flex-end', alignItems: 'center', padding: '0 16px', minHeight: '40px' }}>
+                <div>ここにemailを表示</div>
 
                 <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleMenuOpen}>
                     <MenuIcon />
@@ -37,7 +36,6 @@ function Header() {
                     <MenuItem onClick={handleMenuClose}>設定</MenuItem>
                     <MenuItem onClick={handleMenuClose}>ログアウト</MenuItem>
                 </Menu>
-                
             </Toolbar>
         </AppBar>
     </>

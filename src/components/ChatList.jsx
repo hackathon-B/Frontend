@@ -8,12 +8,11 @@ function ChatList() {
         </Box>
         <Box
             sx={{
-                
-                    width: '100%',  // 親コンポーネントの横幅いっぱいに設定
+                    width: '100%',
                     backgroundColor: '#e0e0e0',
                     display: 'flex',
                     flexDirection: 'column',
-                
+                    overflowY: 'auto'
             }}
         >
             <a>チャットリスト</a>
