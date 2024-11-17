@@ -1,6 +1,7 @@
-import React from 'react';
+// import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 //import { AuthProvider } from './store';
+import SignUpPage from './pages/SignUpPage';
 import LoginPage from './pages/LoginPage';
 import ChatPage from './pages/ChatPage';
 import UserPage from './pages/UserPage';
@@ -12,6 +13,7 @@ const App = () => {
   return (
     <>
       <Routes>
+        <Route path="/signUp" element={<SignUpPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/" element={<ChatPage />}/>
         <Route path="/user" element={<UserPage />}/>
