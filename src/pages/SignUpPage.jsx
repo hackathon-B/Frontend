@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { callApi } from '../common/api.js';
-import { Box, TextField, Button, Typography, Paper, Link } from '@mui/material';
+import { Box, TextField, Button, Typography, Paper, } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { BASE_URL, API_URLS } from '../common/constants.js';
 
 
-function LoginPage() {
+function SignUpPage() {
     const [, setCookies] = useCookies(['token']);
     const navigate = useNavigate();
     const [email,setEmail] = useState("");
@@ -40,7 +40,7 @@ function LoginPage() {
         return "";
     };
 
-    const handleLogin = async (e) => {
+    const handleSignup = async (e) => {
         e.preventDefault();
 
         // フォーム送信時のバリデーション
@@ -58,7 +58,7 @@ function LoginPage() {
         }
 
         try {
-            const response = await callApi('POST', `${BASE_URL}${API_URLS.LOGIN}`, {
+            const response = await callApi('POST', `${BASE_URL}${API_URLS.REGISTER}`, {
                 email,
                 password,
             });
@@ -102,7 +102,7 @@ function LoginPage() {
                     Fucabo
                 </Typography>
 
-                <Box component="form" onSubmit={handleLogin} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '40px' }}>
+                <Box component="form" onSubmit={handleSignup} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '40px' }}>
                     <TextField
                         id="email"
                         label="e-mail"
@@ -159,20 +159,9 @@ function LoginPage() {
                     )}
 
                     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1em', marginTop: 2 }}>
-                        <Button variant="contained" color="primary" type="submit" sx={{ width: '16em' }}>
-                            Login
-                        </Button>
-                        <Button variant="contained" color="success" type="submit" onClick={() => navigate('/signUp')} sx={{ width: '16em' }}>
+                        <Button variant="contained" color="success" type="submit" sx={{ width: '16em' }}>
                             新規登録
                         </Button>
-                        <Link
-                            href="#"
-                            sx={{
-                                fontSize: '0.875rem',
-                            }}
-                        >
-                            パスワードを忘れた方はこちら
-                        </Link>
                     </Box>
                 </Box>
             </Paper>
@@ -180,5 +169,4 @@ function LoginPage() {
     );
 };
 
-export default LoginPage;
-
+export default SignUpPage;
