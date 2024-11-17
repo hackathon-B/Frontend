@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import AppBar from '@mui/material/AppBar'
-import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import Menu from '@mui/material/Menu'
@@ -20,8 +18,7 @@ const Header = () => {
 
   return (
     <>
-        <AppBar position="relative" color="primary" sx={{ height: '40px' }}>
-            <Toolbar sx={{ justifyContent: 'flex-end', alignItems: 'center', minHeight: '40px' }}>
+        <div position="relative" color="primary" className="h-10 flex justify-end items-center">
                 <div>ここにemailを表示</div>
 
                 <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleMenuOpen}>
@@ -36,8 +33,7 @@ const Header = () => {
                     <MenuItem onClick={handleMenuClose}>設定</MenuItem>
                     <MenuItem onClick={handleMenuClose}>ログアウト</MenuItem>
                 </Menu>
-            </Toolbar>
-        </AppBar>
+        </div>
     </>
   )
 }
