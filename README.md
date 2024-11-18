@@ -8,9 +8,13 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
 React Ver.17以降はjsxファイルに import React from 'react' の記述不要
-react-router-DOM v6
-Tailwindcss with vite
 
+### 初期設定
+.gitignoreにnode_modules/を指定しているため、git clone後にnpm ciを実行する
+```
+npm ci
+```
+ 実行時package-lock.jsonを参照している。
 
 ---------------
 ファイル名の付け方
