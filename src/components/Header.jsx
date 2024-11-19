@@ -19,7 +19,7 @@ const Header = () => {
   return (
     <>
         <div position="relative" color="primary" className="h-10 flex justify-end items-center">
-                <div>ここにemailを表示</div>
+                <div>hogehoge@gmail.com</div>
 
                 <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleMenuOpen}>
                     <MenuIcon />

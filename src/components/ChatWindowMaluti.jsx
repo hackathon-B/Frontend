@@ -15,7 +15,7 @@ const ChatWindowMaluti = () => {
 
   return (
     <>
-      <div className="split w-full">
+      <div className="split-row w-full">
 
         <div id="split-0" style={{ 
           display: 'flex', 

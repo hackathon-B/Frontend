@@ -34,16 +34,34 @@ const ChatList = () => {
 
     return (
         <>
-            <Box>
-                <p>{currentChat.title || 'チャットを選択してください'}</p>
-            </Box>
             <TableContainer 
                 component={Paper} 
                 sx={{ 
-                    maxHeight: 240,  // スクロールの高さ制限
-                    backgroundColor: '#e0e0e0'
+                    height: '100%',
+                    minHeight: 120,
+                    maxHeight: '100%',
+                    backgroundColor: '#e0e0e0',
+                    overflow: 'auto',
+                    flex: 1,
                 }}
             >
+                
+                <Box sx={{
+                    padding: 1,
+                    backgroundColor: '#bdbdbd',
+                    position: 'sticky',
+                    top: 0,
+                    zIndex: 1,
+                    borderBottom: '1px solid #999'
+                }}>
+                    <p style={{
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                        margin: 0
+                    }}>{currentChat.title || 'チャットを選択してください'}</p>
+                </Box>
+
                 <Table stickyHeader>  {/* ヘッダーを追加する場合に便利 */}
                     <TableBody>
                         {chatList.map((chat) => (
@@ -59,7 +77,16 @@ const ChatList = () => {
                                 }}
                                 selected={currentChat.id === chat.id}  // 選択状態の表示
                             >
-                                <TableCell sx={{ paddingY: 1, paddingX: 3 }}>{chat.title}</TableCell>
+                                <TableCell sx={{ 
+                                    paddingY: 0.5,
+                                    paddingX: 3,
+                                    maxWidth: 200,
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis',
+                                    whiteSpace: 'nowrap'
+                                }}>
+                                    {chat.title}
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

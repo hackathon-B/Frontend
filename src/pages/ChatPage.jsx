@@ -5,6 +5,9 @@ import ChatWindowMaluti from '../components/ChatWindowMaluti'
 import ChatList from '../components/ChatList'
 import DictionaryList from '../components/DictionaryList'
 
+import Split from 'split.js';
+import '../css/split.css';
+
 import { Drawer, Box, IconButton, Tooltip } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AddIcon from '@mui/icons-material/Add';
@@ -15,6 +18,15 @@ const ChatPage = () => {
   const [open, setOpen] = useState(false);
   const [showMultiWindow, setShowMultiWindow] = useState(false);
 
+  useEffect(() => {
+    Split(['#chat-list', '#dictionary-list'],{
+        sizes: [50, 50],
+        minSize: 50,
+        gutterSize: 10,
+        direction: 'vertical'    // 上下分割
+    });
+  }, []);
+  
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -68,8 +80,18 @@ const ChatPage = () => {
                 <CloseIcon />
               </IconButton>
             </Box>
-            <ChatList />
-            <DictionaryList />
+
+            <div className="split-column" style={{ height: 'calc(60vh)' }}>
+              
+              <div id="chat-list">
+                <ChatList />
+              </div>
+              <div id="dictionary-list">
+                <DictionaryList />
+              </div>
+
+            </div>            
+          
           </Drawer>
         </Box>
 
