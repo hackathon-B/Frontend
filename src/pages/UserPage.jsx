@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { callApi } from '../common/api';
 import { BASE_URL, API_URLS } from '../common/constants';
-import { Avatar } from '@mui/material';
-import PersonIcon from '@mui/icons-material/Person';
+import UserAvatar from '../components/UserAvatar';
+import UserModal from '../components/UserModal';
+
 
 function UserPage() {
     const [user, setUser] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     
     useEffect(() => {
         const fetchUser = async () => {
@@ -18,18 +20,15 @@ function UserPage() {
     return (
         <div className="w-full min-h-screen p-4">
             <div className="flex justify-end">
-                {user?.icon_url ? (
-                    <Avatar 
-                        src={user.icon_url}
-                        alt="ユーザーアイコン"
-                        sx={{ width: 56, height: 56 }}
-                    />
-                ) : (
-                    <Avatar sx={{ width: 56, height: 56 }}>
-                        <PersonIcon />
-                    </Avatar>
-                )}
+                <div onClick={() => setIsModalOpen(true)} style={{ cursor: 'pointer' }}>
+                    <UserAvatar user_icon={user?.user_icon} />
+                </div>
             </div>
+            <UserModal
+                open={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                user={user || { user_icon: null }}
+            />
         </div>
     );
 };
