@@ -18,21 +18,29 @@ const Header = () => {
 
   return (
     <>
-        <div position="relative" color="primary" className="h-10 flex justify-end items-center">
-                <div>hogehoge@gmail.com</div>
+        <div className="relative h-10 flex justify-end items-center">
+          <div>hogehoge@gmail.com</div>
 
-                <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleMenuOpen}>
-                    <MenuIcon />
-                </IconButton>
+          <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleMenuOpen}>
+            <MenuIcon />
+          </IconButton>
 
-                <Menu
-                    anchorEl={anchorEl}
-                    open={Boolean(anchorEl)}
-                    onClose={handleMenuClose}
-                >
-                    <MenuItem onClick={handleMenuClose}>設定</MenuItem>
-                    <MenuItem onClick={handleMenuClose}>ログアウト</MenuItem>
-                </Menu>
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleMenuClose}
+            sx={{
+              '& .MuiPaper-root': {
+                backgroundColor: (theme) => 
+                  theme.palette.mode === 'dark' ? '#333' : '#fff',
+                color: (theme) => 
+                  theme.palette.mode === 'dark' ? '#fff' : '#000'
+              }
+            }}
+          >
+            <MenuItem onClick={handleMenuClose}>設定</MenuItem>
+            <MenuItem onClick={handleMenuClose}>ログアウト</MenuItem>
+          </Menu>
         </div>
     </>
   )

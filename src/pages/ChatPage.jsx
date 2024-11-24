@@ -31,11 +31,12 @@ const ChatPage = () => {
   };
 
   return (
-    <div className="w-full h-full flex flex-col relative">
+    <div color="primary" className="w-full h-full flex flex-col relative">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div color="primary" className="flex items-center justify-between">
         <Tooltip title="サイドバーを開く">
           <IconButton 
+            color="inherit"
             onClick={handleDrawerToggle}
             size="medium"
             sx={{ width: '40px', height: '40px'}}
@@ -48,16 +49,16 @@ const ChatPage = () => {
       </div>
 
       {/* Body */}
-      <Box sx={{ 
-        height: 'calc(100vh - 40px)', 
-        display: 'flex', 
-        flexDirection: 'row', 
-        overflow: 'hidden',
-        position: 'relative'
-      }}>
+      <div color="primary"
+        className="
+          flex flex-row
+          relative
+          h-calc(100vh - 40px)
+          overflow-hidden
+      ">
         
         {/* Sidebar */}
-        <Box
+        <Box color="secondary"
           sx={{
             width: open ? '300px' : '0px',
             transition: 'width 0.3s ease',
@@ -65,6 +66,7 @@ const ChatPage = () => {
           }}
         >
           <Drawer
+            color="secondary"
             variant="persistent"
             open={open}
             sx={{
@@ -76,9 +78,9 @@ const ChatPage = () => {
               },
             }}
           >
+
             {/* Sidebar Content */}
-            <div className="split-column" style={{ padding: '1rem', height: '100%' }}>
-              
+            <div color="secondary" className="split-column flex flex-col px-4 py-2 h-full">
               <div id="chat-list">
                 <ChatList />
               </div>
@@ -88,8 +90,7 @@ const ChatPage = () => {
               <div id="dictionary-editor">
                 <DictionaryEditor />
               </div>
-
-            </div>            
+            </div>
           
           </Drawer>
         </Box>
@@ -108,7 +109,7 @@ const ChatPage = () => {
             <ChatWindow />
           )}
         </Box>
-      </Box>
+      </div>
 
       <Tooltip 
         title="チャットウィンドウを追加" 

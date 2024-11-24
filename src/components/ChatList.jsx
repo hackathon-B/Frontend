@@ -1,5 +1,8 @@
 import { useState } from 'react';
-import { Box, Table, TableBody, TableCell, TableContainer, TableRow, Paper } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableRow, Paper } from '@mui/material';
+import LaunchIcon from '@mui/icons-material/Launch'
+import IconButton from '@mui/material/IconButton'
+import Tooltip from '@mui/material/Tooltip'
 
 const ChatList = () => {
     const chatList = [
@@ -12,7 +15,7 @@ const ChatList = () => {
         { id: 7, title: "スプリントレビュー" },
         { id: 8, title: "技術検討会議" },
         { id: 9, title: "リリース計画MTG" },
-        { id: 10, title: "パフォーマンス改善検討" },
+        { id: 10, title: "パフォーマンス改善検討パフォーマンス改善検討パフォーマンス改善検討" },
         { id: 11, title: "セキュリティレビュー" },
         { id: 12, title: "UI/UXフィードバック" },
         { id: 13, title: "インフラ構成検討" },
@@ -34,64 +37,79 @@ const ChatList = () => {
 
     return (
         <>
-            <TableContainer 
-                component={Paper} 
-                sx={{ 
-                    height: '100%',
-                    minHeight: 120,
-                    maxHeight: '100%',
-                    backgroundColor: '#e0e0e0',
-                    overflow: 'auto',
-                    flex: 1,
-                }}
-            >
-                
-                <Box sx={{
-                    padding: 1,
-                    backgroundColor: '#bdbdbd',
-                    position: 'sticky',
-                    top: 0,
-                    zIndex: 1,
-                    borderBottom: '1px solid #999'
-                }}>
-                    <p style={{
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                        margin: 0
-                    }}>{currentChat.title || 'チャットを選択してください'}</p>
-                </Box>
+                <TableContainer 
+                    component={Paper} 
+                    sx={{ 
+                        height: '100%',
+                        minHeight: 120,
+                        maxHeight: '100%',
+                        overflow: 'auto',
+                        flex: 1,
+                    }}
+                >
+                    
+                    <div className="
+                        flex items-center justify-between
+                        sticky top-0 z-10
+                        h-10
+                        border border-gray-500
+                        rounded-md
+                        bg-secondary-light dark:bg-secondary-dark
+                        border-b border-gray-300 dark:border-gray-700
+                    ">
+                        <p className="
+                            truncate
+                            px-2
+                            text-gray-800
+                            text-sm
+                            flex-1
+                            text-text-light dark:text-text-dark
+                        ">
+                            {currentChat.title || 'チャットを選択してください'}
+                        </p>
 
-                <Table stickyHeader>  {/* ヘッダーを追加する場合に便利 */}
-                    <TableBody>
-                        {chatList.map((chat) => (
-                            <TableRow
-                                key={chat.id}
-                                hover  // ホバーエフェクト
-                                onClick={() => handleChatSelect(chat.id)}
-                                sx={{ 
-                                    cursor: 'pointer',
-                                    '&.Mui-selected': {
-                                        backgroundColor: '#bdbdbd'
-                                    }
-                                }}
-                                selected={currentChat.id === chat.id}  // 選択状態の表示
+                        <Tooltip title="別ウィンドウで開く">
+                            <IconButton
+                                size="medium"
+                                color="inherit" aria-label="menu"
+                                sx={{ width: '40px', height: '40px'}}
                             >
-                                <TableCell sx={{ 
-                                    paddingY: 0.5,
-                                    paddingX: 3,
-                                    maxWidth: 200,
-                                    overflow: 'hidden',
-                                    textOverflow: 'ellipsis',
-                                    whiteSpace: 'nowrap'
-                                }}>
-                                    {chat.title}
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                                <LaunchIcon />
+                            </IconButton>
+                        </Tooltip>
+
+                    </div>
+                    <div className="
+                        bg-secondary-light dark:bg-secondary-dark
+                    ">
+                        <Table stickyHeader>  {/* ヘッダーを追加する場合に便利 */}
+                            <TableBody>
+                                {chatList.map((chat) => (
+                                <TableRow
+                                    key={chat.id}
+                                    hover  // ホバーエフェクト
+                                    onClick={() => handleChatSelect(chat.id)}
+                                    sx={{ cursor: 'pointer' }}
+                                    selected={currentChat.id === chat.id}  // 選択状態の表示
+                                >
+                                    <TableCell sx={{ 
+                                        paddingY: 0.5,
+                                        paddingX: 3,
+                                        maxWidth: 200,
+                                        overflow: 'hidden',
+                                        textOverflow: 'ellipsis',
+                                        whiteSpace: 'nowrap',
+                                        color: 'inherit'
+                                        }}
+                                    >
+                                        {chat.title}
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                            </TableBody>
+                        </Table>
+                    </div>
+                </TableContainer>
         </>
     );
 }

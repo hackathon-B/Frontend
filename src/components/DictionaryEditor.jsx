@@ -36,7 +36,6 @@ const DictionaryEditor = () => {
         </IconButton>
       </Tooltip>
 
-
       {/* 説明入力 */}
       <textarea
         placeholder="Dictionary Description"
