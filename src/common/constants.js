@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://127.0.0.1:8080';
+export const BASE_URL = 'http://localhost:8000';
 
 /**
  * APIエンドポイントの定数と関数
@@ -8,13 +8,19 @@ export const BASE_URL = 'https://127.0.0.1:8080';
 export const API_URLS = {
     /**
      * ユーザーログイン
+     * @method {POST}
      * @type {string}
+     * @param {string} email
+     * @param {string} password
      */
     LOGIN: '/api/auth/login',
 
     /**
      * ユーザー登録
+     * @method {POST}
      * @type {string}
+     * @param {string} email
+     * @param {string} password
      */
     REGISTER: '/api/auth/register',
 
@@ -26,48 +32,54 @@ export const API_URLS = {
 
     /**
      * ログアウト
+     * @method {POST}
      * @type {string}
      */
     LOGOUT: '/api/auth/logout',
 
     /**
      * ユーザー情報取得
+     * @method {GET}
      * @type {string}
+     * @param {string} userId
      */
     GET_USER: '/api/user',
 
     /**
      * ユーザー情報更新
+     * @method {PUT}
      * @type {string}
      */
     UPDATE_USER: '/api/user',
 
     /**
      * ユーザー削除
+     * @method {DELETE}
      * @type {string}
+     * @param {string} userId
      */
     DELETE_USER: '/api/user',
 
     /**
      * チャット開始
+     * @method {POST}
      * @type {string}
      */
     START_CHAT: '/api/chats',
 
     /**
      * チャット一覧取得
+     * @method {GET}
      * @type {string}
+     * @param {string} userId
      */
     GET_CHAT_LIST: '/api/chats',
 
     /**
      * 特定のチャット情報取得
-     * @function
+     * @method {GET}
+     * @type {string}
      * @param {number|string} id - チャットID
-     * @returns {string} チャット情報取得用のURL
-     * @example
-     * const endpoint = API_URLS.GET_CHAT_BY_ID(123);
-     * // endpoint は "/api/chats/123" となる
      */
     GET_CHAT_BY_ID: (id) => `/api/chats/${id}`,
 
@@ -184,14 +196,4 @@ export const API_CHAT_URLS = (chat_id) => ({
 export const API_CHAT_MESSAGE_URLS = {
   ADD_MESSAGE: (id) => `/api/chats/${id}/messages`,
   UPDATE_MESSAGE: (id, messageId) => `/api/chats/${id}/messages/${messageId}`,
-};
-
-export const URL_ADD_CHAT_ID = {
-  CHAT_ID: 'chatId',
-};
-
-
-export const URL_ADD_DICTIONARY_ID = (id) => {
-  DICTIONARY_ID: 'dictionaryId',
-
 };

@@ -1,12 +1,15 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useCookies } from 'react-cookie';
+import { AuthContext } from '../store.jsx';
+
 import { callApi } from '../common/api.js';
 import { Box, TextField, Button, Typography, Paper, } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { BASE_URL, API_URLS } from '../common/constants.js';
+import { API_URLS } from '../common/constants.js';
 
 
 function SignUpPage() {
+    const { setUserInfo } = useContext(AuthContext);
     const [, setCookies] = useCookies(['token']);
     const navigate = useNavigate();
     const [email,setEmail] = useState("");
@@ -58,7 +61,7 @@ function SignUpPage() {
         }
 
         try {
-            const response = await callApi('POST', `${BASE_URL}${API_URLS.REGISTER}`, {
+            const response = await callApi('POST', `${API_URLS.REGISTER}`, {
                 email,
                 password,
             });
@@ -71,6 +74,8 @@ function SignUpPage() {
                     sameSite: 'none',  // 全てのクロスサイトリクエストでCookieを送信。本番では'strict'が安全
                     secure: true       // HTTPSのみ
                 });
+
+                setUserInfo(response.user);
 
                 // チャットページにリダイレクト
                 navigate('/');

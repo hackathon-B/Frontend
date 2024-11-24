@@ -1,6 +1,24 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
+import { callApi } from '../common/api';
+import { API_URLS } from '../common/constants';
 
 const ChatWindow = (props) => {
+
+  const chatId = props.chatId;
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    const endpoint = `${API_URLS.GET_CHAT_BY_ID(chatId)}`;
+    callApi('GET', endpoint, null)
+    .then(response => {
+      console.log(response);
+      setMessages(response.messages);
+    })
+    .catch(error => {
+      console.error(error);
+      })
+  }, [chatId]); 
+
   return (
     <div style={{ 
       display: 'flex', 
@@ -15,34 +33,12 @@ const ChatWindow = (props) => {
         overflowY: 'auto',
         padding: '1rem'
       }}>
-        {props.messages?.map((message) => (
-          <div 
-            key={message.id}
-            style={{
-              display: 'flex',
-              justifyContent: message.senderType === 'user' ? 'flex-end' : 'flex-start',
-              marginBottom: '1rem'
-            }}
-          >
-            {/* 吹き出し */}
-            <div
-              style={{
-                maxWidth: '70%',
-                padding: '0.8rem',
-                borderRadius: '1rem',
-                backgroundColor: message.senderType === 'user' ? '#007bff' : '#ffffff',
-                color: message.senderType === 'user' ? '#ffffff' : '#000000',
-                boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                // 吹き出しの尻尾の位置を変える
-                borderBottomRightRadius: message.senderType === 'user' ? '0.2rem' : '1rem',
-                borderBottomLeftRadius: message.senderType === 'user' ? '1rem' : '0.2rem'
-              }}
-            >
-              {message.content}
-            </div>
-          </div>
+
+        {messages?.map((message) => (
+          <Message key={message.messageId} message={message} />
         ))}
       </div>
+
 
         <div style={{ 
             display: 'flex', 

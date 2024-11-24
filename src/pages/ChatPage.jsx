@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from 'react';
+// 共通
+import { callApi } from '../common/api';
+import { API_URLS } from '../common/constants';
+// コンポーネント
 import Header from '../components/Header'
 import ChatWindow from '../components/ChatWindow'
 import ChatWindowMaluti from '../components/ChatWindowMaluti'
@@ -7,7 +11,7 @@ import DictionaryList from '../components/DictionaryList'
 import DictionaryEditor from '../components/DictionaryEditor'
 import Split from 'split.js';
 import '../css/split.css';
-
+// MUI
 import { Drawer, Box, IconButton, Tooltip } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AddIcon from '@mui/icons-material/Add';
