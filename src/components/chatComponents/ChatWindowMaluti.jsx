@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Split from 'split.js';
-import '../css/split.css';
+import '../../css/split.css';
 
 const ChatWindowMaluti = () => {
     

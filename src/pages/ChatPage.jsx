@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from 'react';
+// 共通
+import { callApi } from '../common/api';
+import { API_URLS } from '../common/constants';
+// モックデータのインポート
+import { mockMessages } from '../common/MockDatas';
+// コンポーネント
 import Header from '../components/Header'
-import ChatWindow from '../components/ChatWindow'
-import ChatWindowMaluti from '../components/ChatWindowMaluti'
+import ChatWindow from '../components/chatComponents/ChatWindow'
+import ChatWindowMaluti from '../components/chatComponents/ChatWindowMaluti'
 import ChatList from '../components/ChatList'
 import DictionaryList from '../components/DictionaryList'
 import DictionaryEditor from '../components/DictionaryEditor'
+// 分割
 import Split from 'split.js';
 import '../css/split.css';
-
+// MUI
 import { Drawer, Box, IconButton, Tooltip } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AddIcon from '@mui/icons-material/Add';
@@ -16,6 +23,8 @@ import AddIcon from '@mui/icons-material/Add';
 const ChatPage = () => {
   const [open, setOpen] = useState(false);
   const [showMultiWindow, setShowMultiWindow] = useState(false);
+  const [currentChat, setCurrentChat] = useState({});
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     Split(['#chat-list', '#dictionary-list', '#dictionary-editor'],{
@@ -26,12 +35,33 @@ const ChatPage = () => {
     });
   }, []);
   
+  useEffect(() => {
+    if (currentChat.id) {
+      // API呼び出しをコメントアウト
+      /*
+      const endpoint = `${API_URLS.GET_CHAT_BY_ID(currentChat.id)}`;
+      callApi('GET', endpoint, null)
+        .then(response => {
+          setMessages(response.messages);
+        })
+        .catch(error => {
+          console.error(error);
+          // 必要に応じてエラーハンドリング
+        });
+      */
+
+      // モックデータを使用
+      setMessages(mockMessages); // モックデータを設定
+    }
+  }, [currentChat.id]);
+
   const handleDrawerToggle = () => {
     setOpen(prevState => !prevState);
   };
 
   return (
     <div color="primary" className="w-full h-full flex flex-col relative">
+      
       {/* Header */}
       <div color="primary" className="flex items-center justify-between">
         <Tooltip title="サイドバーを開く">
@@ -80,11 +110,18 @@ const ChatPage = () => {
           >
 
             {/* Sidebar Content */}
-            <div color="secondary" className="split-column flex flex-col px-4 py-2 h-full">
+            <div color="primary" className="split-column flex flex-col px-4 py-2 h-full
+              bg-primary-light dark:bg-primary-dark
+            ">
               <div id="chat-list">
-                <ChatList />
+                {/* チャットリスト */}
+                <ChatList 
+                  currentChat={currentChat}
+                  setCurrentChat={setCurrentChat}
+                />
               </div>
               <div id="dictionary-list">
+                {/* 辞書リスト */}
                 <DictionaryList />
               </div>
               <div id="dictionary-editor">
@@ -103,14 +140,18 @@ const ChatPage = () => {
             position: 'relative'
           }}
         >
+          {/* チャットウィンドウ */}
           {showMultiWindow ? (
-            <ChatWindowMaluti />
+            // "messages"をprops"messages"として渡している (マルチウィンドウ)
+            <ChatWindowMaluti chatId={currentChat.id} messages={messages} />
           ) : (
-            <ChatWindow />
+            // "messages"をprops"messages"として渡している
+            <ChatWindow chatId={currentChat.id} messages={messages} />
           )}
         </Box>
       </div>
 
+      {/* チャットウィンドウを追加 */}  
       <Tooltip 
         title="チャットウィンドウを追加" 
         sx={{
