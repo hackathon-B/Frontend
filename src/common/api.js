@@ -30,6 +30,10 @@ export async function callApi(method, endpoint, data = null) {
             method: method,
             url: `${BASE_URL}${endpoint}`,
             data: data,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            withCredentials: true, // Cookieを含める場合
         });
         return response.data;
     } catch (error) {

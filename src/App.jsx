@@ -16,6 +16,7 @@ import { useState, useEffect } from 'react';
 const App = () => {
   const [darkMode, setDarkMode] = useState(false);
 
+  // dark modeの設定
   useEffect(() => {
     // システムの設定を確認
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -23,6 +24,7 @@ const App = () => {
     }
   }, []);
 
+  // dark modeの適用
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add('dark');
