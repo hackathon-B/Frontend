@@ -21,7 +21,13 @@ const Header = () => {
         <div className="relative h-10 flex justify-end items-center">
           <div>hogehoge@gmail.com</div>
 
-          <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleMenuOpen}>
+          <IconButton 
+            edge="start" 
+            color="inherit" 
+            aria-label="menu" 
+            onClick={handleMenuOpen} 
+            sx={{ marginLeft: '16px' }}
+          >
             <MenuIcon />
           </IconButton>
 

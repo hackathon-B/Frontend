@@ -60,7 +60,7 @@ const ChatPage = () => {
   };
 
   return (
-    <div color="primary" className="w-full h-full flex flex-col relative">
+    <div className="w-full h-full flex flex-col relative bg-primary-light dark:bg-primary-dark">
       
       {/* Header */}
       <div color="primary" className="flex items-center justify-between">
@@ -110,7 +110,7 @@ const ChatPage = () => {
           >
 
             {/* Sidebar Content */}
-            <div color="primary" className="split-column flex flex-col px-4 py-2 h-full
+            <div className="split-column flex flex-col px-4 py-2 h-full
               bg-primary-light dark:bg-primary-dark
             ">
               <div id="chat-list">
@@ -136,6 +136,7 @@ const ChatPage = () => {
         <Box 
           sx={{ 
             width: open ? 'calc(100% - 300px)' : '100%',
+            height: 'calc(100vh - 40px)',
             transition: 'width 0.3s ease',
             position: 'relative'
           }}
@@ -148,36 +149,33 @@ const ChatPage = () => {
             // "messages"をprops"messages"として渡している
             <ChatWindow chatId={currentChat.id} messages={messages} />
           )}
-        </Box>
-      </div>
+
 
       {/* チャットウィンドウを追加 */}  
-      <Tooltip 
-        title="チャットウィンドウを追加" 
-        sx={{
-          position: 'fixed',
-          bottom: '20px',
-          right: '20px',
-          zIndex: 1000
-        }}
-      >
-        <IconButton 
-          onClick={() => setShowMultiWindow(prevState => !prevState)}
-          size="large"
-          sx={{ 
-            width: '56px', 
-            height: '56px',
-            backgroundColor: 'primary.main',
-            '&:hover': {
-              backgroundColor: 'primary.dark',
-            },
-            color: 'white',
-            boxShadow: 3
-          }}
-        >
-          <AddIcon />
-        </IconButton>
-      </Tooltip>
+      <div className="absolute top-3 right-3 z-50">
+          <Tooltip 
+            title="チャットウィンドウを追加" 
+          >
+            <IconButton 
+              onClick={() => setShowMultiWindow(prevState => !prevState)}
+              size="large"
+              sx={{ 
+                width: '40px', 
+                height: '40px',
+                backgroundColor: 'primary.main',
+                '&:hover': {
+                  backgroundColor: 'primary.dark',
+                },
+                color: 'white',
+                boxShadow: 3
+              }}
+            >
+              <AddIcon />
+            </IconButton>
+          </Tooltip>
+        </div>
+        </Box>
+      </div>
     </div>
   );
 };

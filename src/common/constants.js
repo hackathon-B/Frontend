@@ -1,4 +1,5 @@
-export const BASE_URL = 'http://localhost:8000';
+console.log('API Base URL:', import.meta.env.VITE_API_BASE_URL);
+export const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 /**
  * APIエンドポイントの定数と関数

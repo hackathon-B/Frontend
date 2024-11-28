@@ -42,11 +42,13 @@ const App = () => {
         <button 
           onClick={() => setDarkMode(!darkMode)}
           className="
-            w-8 h-8
-            bg-secondary-light dark:bg-secondary-dark
-            hover:bg-gray-200 dark:hover:bg-gray-700
+            w-6 h-6
+            flex items-center justify-center
+            bg-secondary-dark dark:bg-secondary-light
+            hover:bg-gray-700 dark:hover:bg-gray-200
             p-2 rounded-lg
             text-sm
+            absolute top-2 left-10 z-50
           "
         >
           {darkMode ? '🌞' : '🌙'}

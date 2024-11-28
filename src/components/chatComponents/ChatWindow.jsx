@@ -10,21 +10,14 @@ const ChatWindow = ({ chatId, messages }) => {
   
   return (
     // チャットウィンドウの本体
-    <div style={{ 
-      display: 'flex', 
-      flexDirection: 'column', 
-      height: '100vh', 
-      width: '100%', 
-      overflowY: 'auto', 
-      backgroundColor: '#f0f0f0'
-    }}>
+    <div className="
+    flex flex-col h-screen 
+    w-full overflow-y-auto
+    rounded-lg
+    bg-secondary-light dark:bg-secondary-dark">
 
       {/* メッセージ表示領域 */}
-      <div style={{ 
-        height: '80%',
-        overflowY: 'auto',
-        padding: '1rem'
-      }}>
+      <div className="h-4/5 overflow-y-auto p-4">
 
         {messages?.map((message) => (
           <Message key={message.messageId} message={message} />
@@ -32,14 +25,8 @@ const ChatWindow = ({ chatId, messages }) => {
       </div>
 
       {/* メッセージ入力フォーム */}  
-      <textarea color="primary" style={{ 
-          display: 'flex', 
-          flexDirection: 'column', 
-          height: '20%', 
-          width: '100%', 
-          overflowY: 'auto', 
-          backgroundColor: '#cccccc'
-      }}>
+      <textarea className="flex flex-col h-1/5 w-full overflow-y-auto
+       bg-primary-light dark:bg-primary-dark">
           
       </textarea>
     
