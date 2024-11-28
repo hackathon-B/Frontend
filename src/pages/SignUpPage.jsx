@@ -61,35 +61,33 @@ function SignUpPage() {
         }
 
         try {
-            const response = await callApi('POST', `${API_URLS.REGISTER}`, {
+            const token = await callApi('POST', `${API_URLS.REGISTER}`, {
                 email,
                 password,
             });
 
-            if (response.token) {
+            if (token) {
                 // トークンをcookieに保存
-                setCookies('token', response.token, {
+                setCookies('token', token, {
                     path: '/',
-                    maxAge: 3600 * 24 * 7, // 1週間
-                    sameSite: 'none',  // 全てのクロスサイトリクエストでCookieを送信。本番では'strict'が安全
-                    secure: true       // HTTPSのみ
+                    maxAge: 3600 * 24 * 7,
+                    sameSite: 'none',
+                    secure: true
                 });
-
-                setUserInfo(response.user);
 
                 // チャットページにリダイレクト
                 navigate('/');
             } else {
                 setErrors(prev => ({
                     ...prev,
-                    submit: "ログインに失敗しました"
+                    submit: "登録に失敗しました"
                 }));
             } 
         } catch (error) {
-            console.error('ログインエラー：', error); 
+            console.error('登録エラー：', error); 
             setErrors(prev => ({
                 ...prev,
-                submit: "ログインに失敗しました。もう一度お試しください。"
+                submit: "登録に失敗しました。もう一度お試しください。"
             }));
         }
     };

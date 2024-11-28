@@ -62,23 +62,21 @@ function LoginPage() {
         }
 
         try {
-            const response = await callApi('POST', `${API_URLS.LOGIN}`, {
+            const token = await callApi('POST', `${API_URLS.LOGIN}`, {
                 email,
                 password,
             });
 
-            if (response.token) {
+            if (token) {
                 // トークンをcookieに保存
-                setCookies('token', response.token, {
+                setCookies('token', token, {
                     path: '/',
-                    maxAge: 3600 * 24 * 7, // 1週間
-                    sameSite: 'none',  // 全てのクロスサイトリクエストでCookieを送信。本番では'strict'が安全
-                    secure: true       // HTTPSのみ
+                    maxAge: 3600 * 24 * 7,
+                    sameSite: 'none',
+                    secure: true
                 });
 
-                setUser(response.user);
-
-                // チャットページにリダイレクト
+                // ログイン成功後、直接ホームページへ遷移
                 navigate('/');
             } else {
                 setErrors(prev => ({
