@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../store';
 // 共通
 import { callApi } from '../common/api';
 import { API_URLS } from '../common/constants';
@@ -23,6 +24,7 @@ import AddIcon from '@mui/icons-material/Add';
 
 
 const ChatPage = () => {
+  const { setUserInfo, userInfo } = useContext(AuthContext);
   const [cookies] = useCookies(['token']);
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
@@ -36,7 +38,7 @@ const ChatPage = () => {
       // ユーザー情報取得
       callApi('GET', API_URLS.GET_USER, null)
         .then(response => {
-          console.log(response);
+          setUserInfo(response);
         })
         .catch(error => {
           console.error(error);
@@ -90,7 +92,7 @@ const ChatPage = () => {
           </IconButton>
         </Tooltip>
         
-        <Header />
+        <Header userEmail={userInfo?.email}/>
       </div>
 
       {/* Body */}
@@ -132,6 +134,7 @@ const ChatPage = () => {
               <div id="chat-list">
                 {/* チャットリスト */}
                 <ChatList 
+                  userId={userInfo?.user_id}
                   currentChat={currentChat}
                   setCurrentChat={setCurrentChat}
                 />

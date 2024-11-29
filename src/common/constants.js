@@ -74,7 +74,7 @@ export const API_URLS = {
      * @type {string}
      * @param {string} userId
      */
-    GET_CHAT_LIST: '/api/chats/',
+    GET_CHAT_LIST: (userId) => `/api/chats/user/${userId}/`,
 
     /**
      * 特定のチャット情報取得

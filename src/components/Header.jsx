@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { AuthContext } from '../store.jsx';
 
-const Header = () => {
+const Header = ({ userEmail }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
   const [, , removeCookie] = useCookies(['token']);
@@ -30,7 +30,7 @@ const Header = () => {
   return (
     <>
         <div className="relative h-10 flex justify-end items-center bg-primary-light dark:bg-primary-dark p-4">
-          <div className="text-text-light dark:text-text-dark mr-4">hogehoge@gmail.com</div>
+          <div className="text-text-light dark:text-text-dark mr-4">{userEmail}</div>
 
           <IconButton 
             edge="start" 

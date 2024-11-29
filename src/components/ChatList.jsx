@@ -15,26 +15,22 @@ import { mockChatList } from '../common/MockDatas';
 
 
 const ChatList = ({ userId, currentChat, setCurrentChat }) => {
-    const [chatList, setChatList] = useState(mockChatList);
+    const [chatList, setChatList] = useState([]);
     const [anchorEl, setAnchorEl] = useState(null);
     const [openDialog, setOpenDialog] = useState(false);
     const [selectedChatId, setSelectedChatId] = useState(null);
 
-    /* メニューボタン 
     useEffect(() => {
-        const endpoint = `${API_URLS.GET_CHAT_LIST(userInfo.id)}`;
+        const endpoint = `${API_URLS.GET_CHAT_LIST(userId)}`;
         callApi('GET', endpoint, null)
         .then(response => {
           console.log(response);
-          setMessages(response.messages);
-          ここで
+          setChatList(response);
         })
         .catch(error => {
           console.error(error);
           })
-    }, []);
-    */
-
+    }, [userId]);
 
     // メニューボタン 開く
     const handleMenuOpen = (event) => {
@@ -117,34 +113,35 @@ const ChatList = ({ userId, currentChat, setCurrentChat }) => {
 
             {/* チャットリストの本体 */}
             <div className="bg-secondary-light dark:bg-secondary-dark">
-                {/* チャットリストのアイテム マッピング */}
-                {chatList.map((chat) => (
-                    <div
-                        key={chat.id}
-                        // チャットリストのアイテムをクリックした時の処理
-                        onClick={() => handleChatSelect(chat.id)}
-                        // マウスオーバー時の背景色
-                        // 現在選択中のチャットの背景色
-                        className={`
-                            flex items-center justify-between
-                            px-3 py-0
-                            cursor-pointer
-                            hover:bg-gray-400 dark:hover:bg-gray-600
-                            ${currentChat?.id === chat.id ? 'bg-gray-300 dark:bg-gray-700' : ''}
-                        `}
-                    >
-                        {/* チャットタイトル */}
-                        <span className="truncate max-w-[200px] text-sm text-gray-800 dark:text-gray-200">
-                            {chat.title}
-                        </span>
+                {chatList.length > 0 ? (
+                    // チャットリストのアイテム マッピング
+                    chatList.map((chat) => (
+                        <div
+                            key={chat.id}
+                            // チャットリストのアイテムをクリックした時の処理
+                            onClick={() => handleChatSelect(chat.id)}
+                            // マウスオーバー時の背景色
+                            // 現在選択中のチャットの背景色
+                                className={`
+                                flex items-center justify-between
+                                px-3 py-0
+                                cursor-pointer
+                                hover:bg-gray-400 dark:hover:bg-gray-600
+                                ${currentChat?.id === chat.id ? 'bg-gray-300 dark:bg-gray-700' : ''}
+                            `}
+                        >
+                            {/* チャットタイトル */}
+                            <span className="truncate max-w-[200px] text-sm text-gray-800 dark:text-gray-200">
+                                {chat.title}
+                            </span>
 
-                        {/* メニューボタン */}
-                        <button className={`
-                            p-1
-                            opacity-0
-                            ${currentChat?.id === chat.id ? 'opacity-100' : 'opacity-0'}
-                            transition-opacity
-                        `}>
+                            {/* メニューボタン */}
+                            <button className={`
+                                p-1
+                                opacity-0
+                                ${currentChat?.id === chat.id ? 'opacity-100' : 'opacity-0'}
+                                transition-opacity
+                            `}>
                             <MoreVertIcon 
                                 className="w-5 h-5 text-gray-300 dark:text-gray-700" 
                                 aria-label="chat-list-menu" 
@@ -166,9 +163,17 @@ const ChatList = ({ userId, currentChat, setCurrentChat }) => {
                                 <MenuItem onClick={() => handleEditChat(chat.id)}>編集</MenuItem>
                                 <MenuItem onClick={() => handleDeleteClick(chat.id)}>削除</MenuItem>
                             </Menu>
-                        </button>
+                            </button>
+                        </div>
+                    ))
+                ) : (
+                    <div className="
+                        flex items-center justify-center h-full
+                        text-sm text-gray-500
+                    ">
+                        履歴がありません
                     </div>
-                ))}
+                )}
             </div>
 
             <Dialog
