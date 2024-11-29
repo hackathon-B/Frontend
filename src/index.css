@@ -2,3 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body {
+  @apply h-full m-0;
+}
+
+body {
+  @apply bg-secondary-light text-text-light;
+}
+
+body.dark-mode {
+  @apply bg-secondary-dark text-text-dark;
+}
+

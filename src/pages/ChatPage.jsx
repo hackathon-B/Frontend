@@ -26,11 +26,26 @@ const ChatPage = () => {
   const [currentChat, setCurrentChat] = useState({});
   const [messages, setMessages] = useState([]);
 
+  // ユーザー情報取得
   useEffect(() => {
-    Split(['#chat-list', '#dictionary-list', '#dictionary-editor'],{
-        sizes: [25, 25, 50 ], 
+    if (cookies.token) {
+      // ユーザー情報取得
+      callApi('GET', API_URLS.GET_USER, null)
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+    console.log(currentChat);
+
+
+  useEffect(() => {
+    Split(['#chat-list', '#dictionary-list'],{
+        sizes: [50, 50 ], 
         minSize: 80,
-        gutterSize: 10,
+        gutterSize: 20,
         direction: 'vertical'    // 上下分割
     });
   }, []);
@@ -92,7 +107,8 @@ const ChatPage = () => {
           sx={{
             width: open ? '300px' : '0px',
             transition: 'width 0.3s ease',
-            overflow: 'hidden'
+            overflow: 'hidden',
+            paddingBottom: '80px'
           }}
         >
           <Drawer
@@ -101,8 +117,8 @@ const ChatPage = () => {
             open={open}
             sx={{
               '& .MuiDrawer-paper': {
-                height: 'calc(100vh - 40px)',
-                width: '300px',
+                height: 'calc(100vh - 120px)',
+                width: '301px',
                 position: 'relative',
                 transition: 'width 0.3s ease',
               },
@@ -123,9 +139,6 @@ const ChatPage = () => {
               <div id="dictionary-list">
                 {/* 辞書リスト */}
                 <DictionaryList />
-              </div>
-              <div id="dictionary-editor">
-                <DictionaryEditor />
               </div>
             </div>
           

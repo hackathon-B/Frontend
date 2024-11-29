@@ -6,6 +6,9 @@ yarn-error.log*
 # Viteのキャッシュ
 .vite/
 
+# distディレクトリ
+dist/
+
 # 環境変数ファイル
 .env
 .env.local

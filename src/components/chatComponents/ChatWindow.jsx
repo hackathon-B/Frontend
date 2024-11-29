@@ -25,7 +25,7 @@ const ChatWindow = ({ chatId, messages }) => {
       </div>
 
       {/* メッセージ入力フォーム */}  
-      <textarea className="flex flex-col h-1/5 w-full overflow-y-auto
+      <textarea className="flex flex-col h-1/4 w-full overflow-y-auto
        bg-primary-light dark:bg-primary-dark">
           
       </textarea>
