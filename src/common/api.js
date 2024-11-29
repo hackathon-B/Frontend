@@ -7,6 +7,7 @@ import { BASE_URL } from '../common/constants';
  * @param {string} method - HTTPメソッド（GET, POST, PUT, DELETEなど）
  * @param {string} endpoint - APIエンドポイントのURL(呼び出し元でAPI_URLS()使用して定義)
  * @param {Object|null} [data=null] - 送信するデータ（POSTやPUTリクエストの場合）
+ * @param {string|null} [token=null] - トークン
  * @returns {Promise<any>} - APIからのレスポンスデータ
  * @throws {Error} - API通信エラーが発生した場合
  *
@@ -23,16 +24,21 @@ import { BASE_URL } from '../common/constants';
  *   .then(data => { /* チャットデータの処理 *\/ })
  *   .catch(error => { /* エラーハンドリング *\/ });
  */
-export async function callApi(method, endpoint, data = null) {
+export async function callApi(method, endpoint, data = null, token = null) {
     try {
+        const headers = {
+            'Content-Type': 'application/json',
+        };
+
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
 
         const response = await axios({
             method: method,
             url: `${BASE_URL}${endpoint}`,
             data: data,
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: headers,
             withCredentials: true, // Cookieを含める場合
         });
         return response.data;
@@ -40,6 +46,6 @@ export async function callApi(method, endpoint, data = null) {
         console.error('API通信エラー', error);
         throw error;
     }
-};
+}
 
 

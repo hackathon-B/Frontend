@@ -9,9 +9,9 @@ export const AuthProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState(null); // ログイン情報を保持する状態
   const [cookies] = useCookies(['token']);
 
-  useEffect(()=> {
+  useEffect(() => {
     if (cookies.token) {
-      callApi('GET', API_URLS.GET_USER)
+      callApi('GET', API_URLS.GET_USER, null, cookies.token)
         .then(data => {
           setUserInfo(data);
         })

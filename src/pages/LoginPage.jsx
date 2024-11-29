@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { useCookies } from 'react-cookie';
 import { AuthContext } from '../store.jsx';
 import { useNavigate } from 'react-router-dom';
@@ -8,13 +8,12 @@ import { API_URLS } from '../common/constants.js';
 // MUI
 import { Box, TextField, Button, Typography, Paper, Link } from '@mui/material';
 
-
 function LoginPage() {
     const { setUserInfo } = useContext(AuthContext);
     const [, setCookies] = useCookies(['token']);
     const navigate = useNavigate();
-    const [email,setEmail] = useState("");
-    const [password,setPassword] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [errors, setErrors] = useState({ 
         email: "",
         password: "",
@@ -62,21 +61,25 @@ function LoginPage() {
         }
 
         try {
-            const token = await callApi('POST', `${API_URLS.LOGIN}`, {
+            const response = await callApi('POST', `${API_URLS.LOGIN}`, {
                 email,
                 password,
             });
 
-            if (token) {
-                // トークンをcookieに保存
-                setCookies('token', token, {
+            if (response && response.token) {
+                // トークンをcookieに保存（オブジェクトではなく文字列として保存）
+                setCookies('token', response.token, {
                     path: '/',
                     maxAge: 3600 * 24 * 7,
                     sameSite: 'none',
                     secure: true
                 });
 
-                // ログイン成功後、直接ホームページへ遷移
+                // ローザー情報を取得して設定
+                const userData = await callApi('GET', API_URLS.GET_USER, null, response.token);
+                setUserInfo(userData);
+
+                // ログイン成功後、ホームページへ遷移
                 navigate('/');
             } else {
                 setErrors(prev => ({

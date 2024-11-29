@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
 // 共通
 import { callApi } from '../common/api';
 import { API_URLS } from '../common/constants';
@@ -21,6 +23,8 @@ import AddIcon from '@mui/icons-material/Add';
 
 
 const ChatPage = () => {
+  const [cookies] = useCookies(['token']);
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [showMultiWindow, setShowMultiWindow] = useState(false);
   const [currentChat, setCurrentChat] = useState({});
@@ -37,8 +41,10 @@ const ChatPage = () => {
         .catch(error => {
           console.error(error);
         });
+    } else {
+      navigate('/login');
     }
-    console.log(currentChat);
+  }, []);
 
 
   useEffect(() => {
@@ -52,8 +58,7 @@ const ChatPage = () => {
   
   useEffect(() => {
     if (currentChat.id) {
-      // API呼び出しをコメントアウト
-      /*
+
       const endpoint = `${API_URLS.GET_CHAT_BY_ID(currentChat.id)}`;
       callApi('GET', endpoint, null)
         .then(response => {
@@ -61,12 +66,7 @@ const ChatPage = () => {
         })
         .catch(error => {
           console.error(error);
-          // 必要に応じてエラーハンドリング
         });
-      */
-
-      // モックデータを使用
-      setMessages(mockMessages); // モックデータを設定
     }
   }, [currentChat.id]);
 
