@@ -43,7 +43,7 @@ const ChatList = ({ userId, currentChat, setCurrentChat }) => {
 
     // チャット -選択-
     const handleChatSelect = (chatId) => {
-        const selectedChat = chatList.find(chat => chat.id === chatId);
+        const selectedChat = chatList.find(chat => chat.chat_id === chatId);
         setCurrentChat(selectedChat);
     };
 
@@ -96,7 +96,7 @@ const ChatList = ({ userId, currentChat, setCurrentChat }) => {
                     truncate px-3 text-sm flex-1
                     text-text-light dark:text-text-dark
                 `}>
-                    {currentChat?.title || 'チャットを選択してください'}
+                    {currentChat?.chat_title || 'チャットを選択してください'}
                 </p>
 
                 {/* 別ウィンドウで開く */}
@@ -117,9 +117,9 @@ const ChatList = ({ userId, currentChat, setCurrentChat }) => {
                     // チャットリストのアイテム マッピング
                     chatList.map((chat) => (
                         <div
-                            key={chat.id}
+                            key={chat.chat_id}
                             // チャットリストのアイテムをクリックした時の処理
-                            onClick={() => handleChatSelect(chat.id)}
+                            onClick={() => handleChatSelect(chat.chat_id)}
                             // マウスオーバー時の背景色
                             // 現在選択中のチャットの背景色
                                 className={`
@@ -127,19 +127,19 @@ const ChatList = ({ userId, currentChat, setCurrentChat }) => {
                                 px-3 py-0
                                 cursor-pointer
                                 hover:bg-gray-400 dark:hover:bg-gray-600
-                                ${currentChat?.id === chat.id ? 'bg-gray-300 dark:bg-gray-700' : ''}
+                                ${currentChat?.chat_id === chat.chat_id ? 'bg-gray-300 dark:bg-gray-700' : ''}
                             `}
                         >
                             {/* チャットタイトル */}
                             <span className="truncate max-w-[200px] text-sm text-gray-800 dark:text-gray-200">
-                                {chat.title}
+                                {chat.chat_title}
                             </span>
 
                             {/* メニューボタン */}
                             <button className={`
                                 p-1
                                 opacity-0
-                                ${currentChat?.id === chat.id ? 'opacity-100' : 'opacity-0'}
+                                ${currentChat?.chat_id === chat.chat_id ? 'opacity-100' : 'opacity-0'}
                                 transition-opacity
                             `}>
                             <MoreVertIcon 
@@ -160,8 +160,8 @@ const ChatList = ({ userId, currentChat, setCurrentChat }) => {
                                     }
                                 }}
                             >
-                                <MenuItem onClick={() => handleEditChat(chat.id)}>編集</MenuItem>
-                                <MenuItem onClick={() => handleDeleteClick(chat.id)}>削除</MenuItem>
+                                <MenuItem onClick={() => handleEditChat(chat.chat_id)}>編集</MenuItem>
+                                <MenuItem onClick={() => handleDeleteClick(chat.chat_id)}>削除</MenuItem>
                             </Menu>
                             </button>
                         </div>

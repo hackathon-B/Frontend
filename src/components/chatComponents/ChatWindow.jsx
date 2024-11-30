@@ -11,10 +11,11 @@ const ChatWindow = ({ chatId, onChatIdUpdate }) => {
   
   useEffect(()=>{
     // chatIdに紐づくmassageを全て取得
-    const endpoint = API_URLS.GET_CHAT_MESSAGES(chatId);
+    const endpoint = `${API_URLS.GET_CHAT_MESSAGES(chatId)}`;
     callApi('GET', endpoint, null)
     .then(response => {
       setMessages(response.messages);
+      console.log(messages);
     })
     .catch(error => {
         console.error(error);
@@ -45,8 +46,8 @@ const ChatWindow = ({ chatId, onChatIdUpdate }) => {
       {/* メッセージ表示領域 */}
       <div className="h-4/5 overflow-y-auto p-4">
 
-        {messages?.map((message) => (
-          <Message key={message.message_id} message={message.message_text} />
+        {messages?.map((messages) => (
+          <Message key={messages.message_id} message={messages.message_text} />
         ))}
       </div>
 

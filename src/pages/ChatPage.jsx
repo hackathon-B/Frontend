@@ -59,9 +59,9 @@ const ChatPage = () => {
   }, []);
   
   useEffect(() => {
-    if (currentChat.id) {
+    if (currentChat.chat_id) {
 
-      const endpoint = `${API_URLS.GET_CHAT_BY_ID(currentChat.id)}`;
+      const endpoint = `${API_URLS.GET_CHAT_BY_ID(currentChat.chat_id)}`;
       callApi('GET', endpoint, null)
         .then(response => {
           setMessages(response.messages);
@@ -70,7 +70,7 @@ const ChatPage = () => {
           console.error(error);
         });
     }
-  }, [currentChat.id]);
+  }, [currentChat.chat_id]);
 
   const handleDrawerToggle = () => {
     setOpen(prevState => !prevState);
@@ -160,9 +160,9 @@ const ChatPage = () => {
           {/* チャットウィンドウ */}
           {showMultiWindow ? (
             // ここではchatIdをpropsとして渡している
-            <ChatWindowMaluti chatId={currentChat.id}/>
+            <ChatWindowMaluti chatId={currentChat.chat_id}/>
           ) : (
-            <ChatWindow chatId={currentChat.id} />
+            <ChatWindow chatId={currentChat.chat_id} />
           )}
 
 
