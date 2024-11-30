@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../store';
@@ -29,8 +29,12 @@ const ChatPage = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [showMultiWindow, setShowMultiWindow] = useState(false);
-  const [currentChat, setCurrentChat] = useState({});
+  const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    console.log('現在のチャット:', currentChat);
+  }, [currentChat]);
 
   // ユーザー情報取得
   useEffect(() => {
@@ -59,9 +63,9 @@ const ChatPage = () => {
   }, []);
   
   useEffect(() => {
-    if (currentChat.chat_id) {
+    if (currentChat?.chat_id) {
 
-      const endpoint = `${API_URLS.GET_CHAT_BY_ID(currentChat.chat_id)}`;
+      const endpoint = `${API_URLS.GET_CHAT(currentChat.chat_id)}`;
       callApi('GET', endpoint, null)
         .then(response => {
           setMessages(response.messages);
@@ -70,7 +74,7 @@ const ChatPage = () => {
           console.error(error);
         });
     }
-  }, [currentChat.chat_id]);
+  }, [currentChat?.chat_id]);
 
   const handleDrawerToggle = () => {
     setOpen(prevState => !prevState);
@@ -160,9 +164,9 @@ const ChatPage = () => {
           {/* チャットウィンドウ */}
           {showMultiWindow ? (
             // ここではchatIdをpropsとして渡している
-            <ChatWindowMaluti chatId={currentChat.chat_id}/>
+            <ChatWindowMaluti chatId={currentChat?.chat_id}/>
           ) : (
-            <ChatWindow chatId={currentChat.chat_id} />
+            <ChatWindow chatId={currentChat?.chat_id} />
           )}
 
 

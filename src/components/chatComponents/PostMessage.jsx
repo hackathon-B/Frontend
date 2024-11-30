@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 // 共通
 import { callApi } from '../../common/api';
 import { API_URLS } from '../../common/constants';

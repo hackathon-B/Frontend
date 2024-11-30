@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { callApi } from './common/api';
 import { API_URLS } from './common/constants';

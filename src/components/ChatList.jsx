@@ -15,7 +15,7 @@ import { mockChatList } from '../common/MockDatas';
 
 
 const ChatList = ({ userId, currentChat, setCurrentChat }) => {
-    const [chatList, setChatList] = useState([]);
+    const [chatList, setChatList] = useState({});
     const [anchorEl, setAnchorEl] = useState(null);
     const [openDialog, setOpenDialog] = useState(false);
     const [selectedChatId, setSelectedChatId] = useState(null);
@@ -45,6 +45,7 @@ const ChatList = ({ userId, currentChat, setCurrentChat }) => {
     const handleChatSelect = (chatId) => {
         const selectedChat = chatList.find(chat => chat.chat_id === chatId);
         setCurrentChat(selectedChat);
+        console.log('ChatListからを渡しました', selectedChat);
     };
 
     // チャット -編集-
