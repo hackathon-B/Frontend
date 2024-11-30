@@ -19,7 +19,7 @@ import Split from 'split.js';
 import '../css/split.css';
 // MUI
 import { Drawer, Box, IconButton, Tooltip } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import AddIcon from '@mui/icons-material/Add';
 
 
@@ -85,14 +85,19 @@ const ChatPage = () => {
       
       {/* Header */}
       <div color="primary" className="h-10 flex items-center justify-between">
-        <Tooltip title="サイドバーを開く">
+        <Tooltip title={open ? "サイドバーを閉じる" : "サイドバーを開く"}>
           <IconButton 
             color="inherit"
             onClick={handleDrawerToggle}
             size="medium"
             sx={{ width: '40px', height: '40px'}}
           >
-            <MenuIcon />
+            <KeyboardDoubleArrowRightIcon 
+              sx={{ 
+                transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
+                transition: 'transform 0.3s ease'
+              }} 
+            />
           </IconButton>
         </Tooltip>
         

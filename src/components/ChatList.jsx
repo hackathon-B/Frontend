@@ -9,6 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 import IconButton from '@mui/material/IconButton'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import KeyboardDoubleArrowRightOutlinedIcon from '@mui/icons-material/KeyboardDoubleArrowRightOutlined';
 import LibraryAddOutlinedIcon from '@mui/icons-material/LibraryAddOutlined';
 
 import { mockChatList } from '../common/MockDatas';
