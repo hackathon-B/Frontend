@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import { Switch, FormControlLabel } from '@mui/material';
 
 // ページ
 import SignUpPage from './pages/SignUpPage';
@@ -39,20 +40,29 @@ const App = () => {
         bg-primary-light dark:bg-primary-dark
         text-text-light dark:text-text-dark
       ">
-        <button 
-          onClick={() => setDarkMode(!darkMode)}
-          className="
-            w-6 h-6
-            flex items-center justify-center
-            bg-secondary-dark dark:bg-secondary-light
-            hover:bg-gray-700 dark:hover:bg-gray-200
-            p-2 rounded-lg
-            text-sm
-            absolute top-2 left-10 z-50
-          "
-        >
-          {darkMode ? '🌞' : '🌙'}
-        </button>
+        <FormControlLabel
+          sx={{
+            position: 'absolute',
+            top: '8px',
+            left: '50px',
+            zIndex: 50,
+          }}
+          control={
+            <Switch
+              size="small"
+              checked={darkMode}
+              onChange={() => setDarkMode(!darkMode)}
+              sx={{
+                '& .MuiSwitch-thumb': {
+                  backgroundColor: darkMode ? '#444444' : '#CCCCCC',
+                },
+                '& .MuiSwitch-track': {
+                  backgroundColor: darkMode ? '#666666' : '#888888',
+                }
+              }}
+            />
+          }
+        />
         
         <Routes>
           <Route path="/signUp" element={<SignUpPage />} />

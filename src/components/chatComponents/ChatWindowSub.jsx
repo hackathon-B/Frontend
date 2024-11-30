@@ -6,7 +6,7 @@ import { API_URLS } from '../../common/constants';
 import Message from './Message';
 import PostMessage from './PostMessage';
 
-const ChatWindow = ({ chatId, setCurrentChat }) => {
+const ChatWindow = ({ chatId, onChatIdUpdate }) => {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
@@ -28,57 +28,39 @@ const ChatWindow = ({ chatId, setCurrentChat }) => {
     }
   }, [chatId]);
 
-  useEffect(() => {
-    // メッセージが更新されたら最下部にスクロール
-    const messageContainer = document.querySelector('.overflow-y-auto');
-    if (messageContainer) {
-      messageContainer.scrollTop = messageContainer.scrollHeight;
-    }
-  }, [messages]); // messagesが更新されるたびに実行
-
   // メッセージを追加するコールバック関数
   const handleNewMessages = (response) => {
     console.log('New messages received:', response);  // デバッグ用
     
     // 新しいメッセージを既存のメッセージ配列に追加
-    setMessages(response.messages);
+    setMessages(prevMessages => [...prevMessages, ...response.messages]);
 
     // chatIdが変更された場合、親に通知
     if (response.chat_id && response.chat_id !== chatId) {
-      setCurrentChat(response.chat_id);
+      onChatIdUpdate(response.chat_id);
     }
   };
 
   return (
     // チャットウィンドウの本体
     <div className="
-      flex flex-col h-screen
-      w-full max-w-4xl mx-auto
-      overflow-y-auto
+      flex flex-col h-screen 
+      w-full overflow-y-auto
       rounded-lg
       bg-secondary-light dark:bg-secondary-dark">
 
       {/* メッセージ表示領域 */}
-      <div className="
-        h-4/5 
-        flex flex-col 
-        overflow-y-auto 
-        scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100
-        py-4 px-[4rem]
-        [mask-image:linear-gradient(to_bottom,transparent,black_10%,black_20%,black)]
-      ">
+      <div className="h-4/5 overflow-y-auto p-4">
         {messages.length > 0 ? (
-          <div className="flex flex-col">
-            {messages.map((message) => (
-              <Message 
-                key={message.message_id} 
-                id={message.message_id} 
-                message={message.message_text} 
-                who={message.sender_type}
-                created_at={message.created_at}
-              />
-            ))}
-          </div>
+          messages.map((message) => (
+            <Message 
+              key={message.message_id} 
+              id={message.message_id} 
+              message={message.message_text} 
+              who={message.sender_type}
+              created_at={message.created_at}
+            />
+          ))
         ) : (
           <div className="text-center text-gray-500">メッセージがありません</div>
         )}

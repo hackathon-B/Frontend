@@ -8,8 +8,8 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 import IconButton from '@mui/material/IconButton'
-import LaunchIcon from '@mui/icons-material/Launch'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import LibraryAddOutlinedIcon from '@mui/icons-material/LibraryAddOutlined';
 
 import { mockChatList } from '../common/MockDatas';
 
@@ -17,7 +17,12 @@ import { mockChatList } from '../common/MockDatas';
 const ChatList = ({ userId, currentChat, setCurrentChat }) => {
     const [chatList, setChatList] = useState({});
     const [anchorEl, setAnchorEl] = useState(null);
-    const [openDialog, setOpenDialog] = useState(false);
+    const [editChatTitle, setEditChatTitle] = useState('');
+    // ダイアログ 削除
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+    // ダイアログ 編集
+    const [openEditDialog, setOpenEditDialog] = useState(false);
+    // 選択中のチャットID
     const [selectedChatId, setSelectedChatId] = useState(null);
 
     useEffect(() => {
@@ -25,12 +30,12 @@ const ChatList = ({ userId, currentChat, setCurrentChat }) => {
         callApi('GET', endpoint, null)
         .then(response => {
           console.log(response);
-          setChatList(response);
+          setChatList(response.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at)));
         })
         .catch(error => {
           console.error(error);
           })
-    }, [userId]);
+    }, [userId, chatList.length]);
 
     // メニューボタン 開く
     const handleMenuOpen = (event) => {
@@ -47,18 +52,25 @@ const ChatList = ({ userId, currentChat, setCurrentChat }) => {
         setCurrentChat(selectedChat);
         console.log('ChatListからを渡しました', selectedChat);
     };
+    
+    /*
+    useEffect((chatId) => {
+        console.log('ChatListのcurrentChat', currentChat);
+        setSelectedChatId(chatId);
+    }, [currentChat]);
+    */
 
     // チャット -編集-
-    const handleEditChat = (chatId) => {
-        console.log(`Editing chat ${chatId}`);
+    const handleEditChat = (selectedChatId) => {
+        console.log(`Editing chat ${selectedChatId}`);
         handleMenuClose();
         // 編集のロジックをここに追加
     };
 
     // チャット -削除-
-    const handleDeleteClick = (chatId) => {
-        setSelectedChatId(chatId);
-        setOpenDialog(true);
+    const handleDeleteClick = (selectedChatId) => {
+        setSelectedChatId(selectedChatId);
+        setOpenDeleteDialog(true);
         handleMenuClose();
     };
     // チャット -削除- 確認
@@ -67,16 +79,18 @@ const ChatList = ({ userId, currentChat, setCurrentChat }) => {
         callApi('DELETE', endpoint, null)
             .then(response => {
                 console.log(response);
-                setOpenDialog(false);
+                setOpenDeleteDialog(false);
+                setChatList(chatList.filter(chat => chat.chat_id !== selectedChatId));
+                setCurrentChat(null);
             })
             .catch(error => {
                 console.error(error);
-                setOpenDialog(false);
+                setOpenDeleteDialog(false);
             });
     };
     // チャット -削除- キャンセル
     const handleDeleteCancel = () => {
-        setOpenDialog(false);
+        setOpenDeleteDialog(false);
         setSelectedChatId(null);
     };
 
@@ -101,13 +115,18 @@ const ChatList = ({ userId, currentChat, setCurrentChat }) => {
                 </p>
 
                 {/* 別ウィンドウで開く */}
-                <Tooltip title="別ウィンドウで開く">
+                <Tooltip title="新規チャット">
                     <IconButton
                         size="medium"
-                        aria-label="menu"
-                        sx={{ width: '40px', height: '40px', color: 'primary.main'}}
+                        aria-label="new-chat"
+                        onClick={() => setCurrentChat(null)}
+                        sx={{ 
+                            width: '40px', 
+                            height: '40px',
+                            
+                        }}
                     >
-                        <LaunchIcon />
+                        <LibraryAddOutlinedIcon sx={{ color: 'white' }}/>
                     </IconButton>
                 </Tooltip>
             </div>
@@ -177,21 +196,51 @@ const ChatList = ({ userId, currentChat, setCurrentChat }) => {
                 )}
             </div>
 
-            <Dialog
-                open={openDialog}
-                onClose={handleDeleteCancel}
-            >
-                <DialogTitle>チャットの削除</DialogTitle>
-                <DialogContent>
-                    このチャットを削除してもよろしいですか？
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleDeleteCancel}>キャンセル</Button>
-                    <Button onClick={handleDeleteConfirm} color="error">
-                        削除
-                    </Button>
-                </DialogActions>
-            </Dialog>
+            {/* チャット -削除- ダイアログ 
+            {openDeleteDialog && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg">
+                        <p className="mb-4">このチャットを削除しますか？, {selectedChatId}</p>
+                        <div className="flex justify-end space-x-4">
+                            <button 
+                                onClick={handleDeleteConfirm} 
+                                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                            >
+                                はい
+                            </button>
+                            <button 
+                                onClick={() => setOpenDeleteDialog(false)} 
+                                className="px-4 py-2 bg-gray-300 dark:bg-gray-700 text-black dark:text-white rounded hover:bg-gray-400 dark:hover:bg-gray-600"
+                            >
+                                いいえ
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {openEditDialog && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg">
+                        <p className="mb-4">このチャットを編集しますか？</p>
+                        <div className="flex justify-end space-x-4">
+                            <button 
+                                onClick={handleEditConfirm} 
+                                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                            >
+                                はい
+                            </button>
+                            <button 
+                                onClick={() => setOpenEditDialog(false)} 
+                                className="px-4 py-2 bg-gray-300 dark:bg-gray-700 text-black dark:text-white rounded hover:bg-gray-400 dark:hover:bg-gray-600"
+                            >
+                                いいえ
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+            */}
         </div>
     );
 };

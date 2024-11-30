@@ -27,7 +27,7 @@ const ChatWindowMaluti = ({ chatId }) => {
         id="split-1" 
         className="flex flex-col w-full overflow-hidden"
       >
-        <ChatWindow chatId={chatId} />
+        <ChatWindow chatIdSub={chatId} />
       </div>
     </div>
   );

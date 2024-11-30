@@ -9,15 +9,8 @@
 }
 
 .gutter {
-  background-color: #eeeeee;
   min-width: 10px;  /* 横方向のgutter */
   min-height: 10px; /* 縦方向のgutter */
-}
-
-@media (prefers-color-scheme: dark) {
-  .gutter {
-    background-color: #000000;
-  }
 }
 
 .gutter.gutter-horizontal {

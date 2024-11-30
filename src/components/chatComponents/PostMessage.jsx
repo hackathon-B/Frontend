@@ -21,22 +21,24 @@ const PostMessage = ({ chatId, messageCallback }) => {
       const handleSendMessage = () => {
         if (!message.trim()) return;
 
-        const specificChatId = chatId || 0;
-        const endpoint = `${API_URLS.POST_MESSAGE(specificChatId)}`;
+        const endpoint = chatId 
+          ? API_URLS.POST_MESSAGE(chatId)  // 既存のチャット
+          : API_URLS.POST_MESSAGE(0);      // 新規チャット
+
         const payload = { 
-            message_text: message, 
-            ai_model_id: parseInt(aiModelId, 10)
+          message_text: message, 
+          ai_model_id: parseInt(aiModelId, 10)
         };
-  
+
         callApi('POST', endpoint, payload)
-        .then(response => {
-          console.log('メッセージ送信成功:', response);
-          messageCallback(response);
-          setMessage('');
-        })
-        .catch(error => {
-          console.error('メッセージ送信エラー:', error);
-        });
+          .then(response => {
+            console.log('メッセージ送信成功:', response);
+            messageCallback(response);
+            setMessage('');
+          })
+          .catch(error => {
+            console.error('メッセージ送信エラー:', error);
+          });
       };
   
       const handleKeyPress = (e) => {
@@ -61,20 +63,24 @@ const PostMessage = ({ chatId, messageCallback }) => {
             width: '100%',
             px: 8,
             py: 1,
-            bgcolor: theme.palette.background.default,
+            backgroundColor: 'secondary-light',
+            dark: {
+                backgroundColor: 'secondary-dark',
+            },
             gap: { xs: 2, md: 2 }
         }}
     >
+        {/* プルダウン AIモデル選択 */}
         <FormControl 
             variant="outlined"
             size="small"
             sx={{ 
-                minWidth: '120px',
+                minWidth: '80px',
                 '& .MuiInputBase-root': {  // Selectコンポーネントのサイズを小さく
                     height: '15px',
                 },
                 '& .MuiOutlinedInput-input': {  // 入力テキストのサイズを小さく
-                    padding: '7px 2px',
+                    padding: '2px 2px',
                     fontSize: '10px',
                 }
             }}
@@ -83,7 +89,7 @@ const PostMessage = ({ chatId, messageCallback }) => {
                 id="ai-model-label" 
                 sx={{ 
                     fontSize: '10px',
-                    color: theme.palette.text.primary
+                    transform: 'translate(20px, -6px) scale(0.75)',  // ラベルの位置を調整
                 }}
             >
                 AI model
@@ -95,7 +101,11 @@ const PostMessage = ({ chatId, messageCallback }) => {
                 onChange={handleModelChange}
                 label="AI model"
                 sx={{
-                    color: theme.palette.text.primary
+                    '& .MuiOutlinedInput-input': {  // 入力部分の余白を調整
+                        padding: '6px 2px',
+                        fontSize: '10px',
+                    },
+
                 }}
                 MenuProps={{
                     PaperProps: {
@@ -158,10 +168,17 @@ const PostMessage = ({ chatId, messageCallback }) => {
                 onClick={handleSendMessage}
                 aria-label="送信"
                 sx={{ 
-                    backgroundColor: 'primary.main',
                     color: 'white',
+                    backgroundColor: 'gray',
                     '&:hover': {
-                        backgroundColor: 'primary.dark',
+                        backgroundColor: 'gray',
+                    },
+                    dark: {
+                        backgroundColor: 'gray-700',
+                        color: 'white',
+                        '&:hover': {
+                            backgroundColor: 'darkgray',
+                        },
                     },
                     marginLeft: 2,
                     width: 36,

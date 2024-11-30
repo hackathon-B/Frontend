@@ -84,7 +84,7 @@ const ChatPage = () => {
     <div className="w-full h-full flex flex-col relative bg-primary-light dark:bg-primary-dark">
       
       {/* Header */}
-      <div color="primary" className="flex items-center justify-between">
+      <div color="primary" className="h-10 flex items-center justify-between">
         <Tooltip title="サイドバーを開く">
           <IconButton 
             color="inherit"
@@ -104,7 +104,8 @@ const ChatPage = () => {
         className="
           flex flex-row
           relative
-          h-calc(100vh - 40px)
+          h-[calc(100vh-40px)]
+          min-h-0
           overflow-hidden
       ">
         
@@ -112,6 +113,7 @@ const ChatPage = () => {
         <Box color="secondary"
           sx={{
             width: open ? '300px' : '0px',
+            height: '100%',
             transition: 'width 0.3s ease',
             overflow: 'hidden',
             paddingBottom: '80px'
@@ -123,7 +125,7 @@ const ChatPage = () => {
             open={open}
             sx={{
               '& .MuiDrawer-paper': {
-                height: 'calc(100vh - 120px)',
+                height: 'calc(100vh - 40px)',
                 width: '301px',
                 position: 'relative',
                 transition: 'width 0.3s ease',
@@ -158,41 +160,51 @@ const ChatPage = () => {
             width: open ? 'calc(100% - 300px)' : '100%',
             height: 'calc(100vh - 40px)',
             transition: 'width 0.3s ease',
-            position: 'relative'
+            position: 'relative',
+            backgroundColor: 'gray-100',
+            dark: {
+              backgroundColor: 'gray-800',
+            },
           }}
         >
           {/* チャットウィンドウ */}
           {showMultiWindow ? (
             // ここではchatIdをpropsとして渡している
-            <ChatWindowMaluti chatId={currentChat?.chat_id}/>
+            <ChatWindowMaluti chatId={currentChat?.chat_id} setCurrentChat={setCurrentChat}/>
           ) : (
-            <ChatWindow chatId={currentChat?.chat_id} />
+            <ChatWindow chatId={currentChat?.chat_id} setCurrentChat={setCurrentChat}/>
           )}
 
 
-      {/* チャットウィンドウを追加 */}  
-      <div className="absolute top-3 right-3 z-50">
-          <Tooltip 
-            title="チャットウィンドウを追加" 
-          >
-            <IconButton 
-              onClick={() => setShowMultiWindow(prevState => !prevState)}
-              size="large"
-              sx={{ 
-                width: '40px', 
-                height: '40px',
-                backgroundColor: 'primary.main',
-                '&:hover': {
-                  backgroundColor: 'primary.dark',
-                },
-                color: 'white',
-                boxShadow: 3
-              }}
+        {/* チャットウィンドウを追加 */ }
+        <div className="absolute top-3 right-3 z-50">
+            <Tooltip 
+              title="チャットウィンドウを追加" 
             >
-              <AddIcon />
-            </IconButton>
-          </Tooltip>
-        </div>
+              <IconButton 
+                onClick={() => setShowMultiWindow(prevState => !prevState)}
+                size="large"
+                sx={{ 
+                  width: '40px', 
+                  height: '40px',
+                  backgroundColor: 'black',
+                  dark: {
+                    backgroundColor: 'gray-400',
+                  },
+                  '&:hover': {
+                    backgroundColor: 'gray',
+                    dark: {
+                      backgroundColor: 'darkgray',
+                    },
+                  },
+                  color: 'white',
+                  boxShadow: 3
+                }}
+              >
+                <AddIcon />
+              </IconButton>
+            </Tooltip>
+          </div>
         </Box>
       </div>
     </div>
