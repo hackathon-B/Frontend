@@ -1,0 +1,40 @@
+# Node.js依存関係
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Viteのキャッシュ
+.vite/
+
+# distディレクトリ
+dist/
+
+# 環境変数ファイル
+.env
+.env.local
+.env.*.local
+
+# OS依存ファイル
+.DS_Store
+Thumbs.db
+
+# エディタ/IDE設定
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ログファイル
+logs/
+*.log
+
+# npmやyarnの一時ファイル
+.pnpm-debug.log*
+.yarn-integrity
+.yarn-cache/
+
+# Coverageディレクトリ
+coverage/
+
+# Axios関連（特にありませんが、APIキーが含まれる可能性のあるファイルは個別に指定）
+# 以下に他の追加が必要な場合
