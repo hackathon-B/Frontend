@@ -1,4 +1,6 @@
 import React, { useState, useContext } from 'react';
+import { callApi } from '../common/api';  
+import { API_URLS } from '../common/constants';
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import Menu from '@mui/material/Menu'
@@ -22,6 +24,15 @@ const Header = ({ userEmail }) => {
   };
 
   const handleLogout = () => {
+
+    callApi('POST', API_URLS.LOGOUT)
+    .then(response => {
+      console.log('ログアウト成功:', response);
+    })
+    .catch(error => {
+      console.error('ログアウトエラー:', error);
+    });
+
     removeCookie('token', { path: '/' }); // トークンを削除
     setUserInfo(null); // ユーザー情報をクリア
     navigate('/login'); // ログインページにリダイレクト

@@ -165,7 +165,12 @@ function SignUpPage() {
                         <Button variant="contained" color="success" type="submit" sx={{ width: '16em' }}>
                             新規登録
                         </Button>
+
+                        <Button variant="contained" color="primary" type="submit" onClick={() => navigate('/login')} sx={{ width: '16em' }}>
+                            ログイン画面へ
+                        </Button>
                     </Box>
+
                 </Box>
             </Paper>
         </Box>

@@ -5,87 +5,41 @@ import '../../css/split.css';
 const ChatWindowMaluti = () => {
     
   useEffect(() => {
-    Split(['#split-0', '#split-1'],{
-        sizes: [50, 50],
-        minSize: 100,
-        gutterSize: 10,
-        cursor: 'col-resize'
+    Split(['#split-0', '#split-1'], {
+      sizes: [50, 50],
+      minSize: 100,
+      gutterSize: 10,
+      cursor: 'col-resize',
+      direction: 'horizontal',
     });
   }, []);
 
   return (
-    <>
-      <div className="split-row w-full">
-
-        <div id="split-0" style={{ 
-          display: 'flex', 
-          flexDirection: 'column', 
-          height: '100vh', 
-          width: '100%', 
-          overflowY: 'auto', 
-          backgroundColor: '#f0f0f0'
-        }}>
-
-          <div style={{ 
-            display: 'flex', 
-            flexDirection: 'column', 
-            height: '80%', 
-            width: '100%', 
-            overflowY: 'auto', 
-            backgroundColor: '#f0f0f0'
-          }}>
-            マルチウィンドウ1 ここにチャットの内容を表示
-          </div>
-
-          <div style={{ 
-            display: 'flex', 
-            flexDirection: 'column', 
-            height: '20%', 
-            width: '100%', 
-            overflowY: 'auto', 
-            backgroundColor: '#cccccc'
-          }}>
-            マルチウィンドウ1 ここにチャット入力欄を表示
-          </div>
-
+    <div className="split-row flex w-full h-screen">
+      <div 
+        id="split-0" 
+        className="flex flex-col w-full bg-gray-100 overflow-hidden"
+      >
+        <div className="flex-1 overflow-y-auto p-4">
+          マルチウィンドウ1 ここにチャットの内容を表示
         </div>
-
-
-        <div id="split-1" style={{ 
-          display: 'flex', 
-          flexDirection: 'column', 
-          height: '100vh', 
-          width: '100%', 
-          overflowY: 'auto', 
-          backgroundColor: '#f0f0f0'
-        }}>
-
-          <div style={{ 
-            display: 'flex', 
-            flexDirection: 'column', 
-            height: '80%', 
-            width: '100%', 
-            overflowY: 'auto', 
-            backgroundColor: '#f0f0f0'
-          }}>
-            マルチウィンドウ2 ここにチャットの内容を表示
-          </div>
-
-          <div style={{ 
-            display: 'flex', 
-            flexDirection: 'column', 
-            height: '20%', 
-            width: '100%', 
-            overflowY: 'auto', 
-            backgroundColor: '#cccccc'
-          }}>
-            マルチウィンドウ2 ここにチャット入力欄を表示
-          </div>
-
+        <div className="h-20 bg-gray-300 p-4">
+          マルチウィンドウ1 ここにチャット入力欄を表示
         </div>
-
       </div>
-    </>
+
+      <div 
+        id="split-1" 
+        className="flex flex-col w-full bg-gray-100 overflow-hidden"
+      >
+        <div className="flex-1 overflow-y-auto p-4">
+          マルチウィンドウ2 ここにチャットの内容を表示
+        </div>
+        <div className="h-20 bg-gray-300 p-4">
+          マルチウィンドウ2 ここにチャット入力欄を表示
+        </div>
+      </div>
+    </div>
   );
 }
 

@@ -7,6 +7,8 @@ export const BASE_URL = import.meta.env.VITE_API_BASE_URL;
  * 各APIエンドポイントへのパスを定義しています。固定エンドポイントは文字列として、動的エンドポイントは関数として定義されています。
  */
 export const API_URLS = {
+
+    // 認証関連
     /**
      * ユーザーログイン
      * @method {POST}
@@ -15,7 +17,6 @@ export const API_URLS = {
      * @param {string} password
      */
     LOGIN: '/api/auth/login/',
-
     /**
      * ユーザー登録
      * @method {POST}
@@ -24,13 +25,11 @@ export const API_URLS = {
      * @param {string} password
      */
     REGISTER: '/api/auth/register/',
-
     /**
      * Googleログイン
      * @type {string}
      */
     GOOGLE_LOGIN: '/api/auth/google/',
-
     /**
      * ログアウト
      * @method {POST}
@@ -38,85 +37,83 @@ export const API_URLS = {
      */
     LOGOUT: '/api/auth/logout/',
 
+
+    //　ユーザー関連
     /**
      * ユーザー情報取得
      * @method {GET}
      * @type {string}
-     * @param {string} userId
      */
     GET_USER: '/api/user/',
-
     /**
      * ユーザー情報更新
-     * @method {PUT}
+     * @method {PATCH}
      * @type {string}
      */
     UPDATE_USER: '/api/user/',
-
     /**
      * ユーザー削除
      * @method {DELETE}
-     * @type {string}
-     * @param {string} userId
+     * @type {string} 
      */
     DELETE_USER: '/api/user/',
 
+
+    // チャット関連
+    /**
+     * 全チャット一覧取得
+     * @method {GET}
+     * @type {string}
+     */
+    GET_CHAT_LIST: '/api/chats/',
     /**
      * チャット開始
      * @method {POST}
      * @type {string}
      */
     START_CHAT: '/api/chats/',
-
     /**
-     * チャット一覧取得
+     * ユーザーに紐づくチャット一覧取得
      * @method {GET}
      * @type {string}
      * @param {string} userId
      */
-    GET_CHAT_LIST: (userId) => `/api/chats/user/${userId}/`,
-
+    GET_CHAT_MESSAGES: (chatId) => `/api/chats/${chatId}/messages/`,
     /**
      * 特定のチャット情報取得
      * @method {GET}
      * @type {string}
      * @param {number|string} id - チャットID
      */
-    GET_CHAT_BY_ID: (id) => `/api/chats/${id}/`,
-
+    GET_CHAT: (id) => `/api/chats/${id}/`,
     /**
      * 特定のチャット情報更新
-     * @function
+     * @method {PATCH}
+     * @type {string}
      * @param {number|string} id - チャットID
-     * @returns {string} チャット情報更新用のURL
-     * @example
-     * const endpoint = API_URLS.UPDATE_CHAT_BY_ID(123);
-     * // endpoint は "/api/chats/123" となる
      */
-    UPDATE_CHAT_BY_ID: (id) => `/api/chats/${id}/ `,
-
+    UPDATE_CHAT: (id) => `/api/chats/${id}/ `,
     /**
      * 特定のチャット削除
-     * @function
+     * @method {DELETE}
+     * @type {string}
      * @param {number|string} id - チャットID
-     * @returns {string} チャット削除用のURL
-     * @example
-     * const endpoint = API_URLS.DELETE_CHAT_BY_ID(123);
-     * // endpoint は "/api/chats/123" となる
      */
-    DELETE_CHAT_BY_ID: (id) => `/api/chats/${id}/`,
+    DELETE_CHAT: (id) => `/api/chats/${id}/`,
 
+
+    // メッセージ関連
     /**
      * 特定チャットへのメッセージ追加
      * @function
      * @param {number|string} id - チャットID
      * @returns {string} メッセージ追加用のURL
      * @example
-     * const endpoint = API_URLS.ADD_MESSAGE(123);
+     * const endpoint = API_URLS.POST_MESSAGE(123);
      * // endpoint は "/api/chats/123/messages" となる
+     * 新規の場合はチャットIDは"0"を指定
      */
-    ADD_MESSAGE: (id) => `/api/chats/${id}/messages/`,
-
+    POST_MESSAGE: (id) => `/api/chats/${id}/messages/`,
     /**
      * 特定チャット内のメッセージ更新
      * @function
@@ -129,18 +126,18 @@ export const API_URLS = {
      */
     UPDATE_MESSAGE: (id, messageId) => `/api/chats/${id}/messages/${messageId}/`,
 
+
+    // 辞書関連
     /**
      * 辞書追加
      * @type {string}
      */
     ADD_DICTIONARY: '/api/dictionary/',
-
     /**
      * 辞書一覧取得
      * @type {string}
      */
     GET_DICTIONARY_LIST: '/api/dictionary/',
-
     /**
      * 特定辞書情報取得
      * @function
@@ -151,7 +148,6 @@ export const API_URLS = {
      * // endpoint は "/api/dictionary/789" となる
      */
     GET_DICTIONARY_BY_ID: (id) => `/api/dictionary/${id}/`,
-
     /**
      * 特定辞書情報更新
      * @function
@@ -162,7 +158,6 @@ export const API_URLS = {
      * // endpoint は "/api/dictionary/789" となる
      */
     UPDATE_DICTIONARY_BY_ID: (id) => `/api/dictionary/${id}/`,
-
     /**
      * 特定辞書削除
      * @function
@@ -173,13 +168,14 @@ export const API_URLS = {
      * // endpoint は "/api/dictionary/789" となる
      */
     DELETE_DICTIONARY_BY_ID: (id) => `/api/dictionary/${id}/`,
-
     /**
      * 辞書検索
      * @type {string}
      */
     SEARCH_DICTIONARY: '/api/dictionary/search/',
 
+
+    // その他
     /**
      * ヘルスチェック
      * @type {string}

@@ -1,45 +1,44 @@
 import axios from 'axios';
 import { BASE_URL } from '../common/constants';
+import { Cookies } from 'react-cookie';
+
+const cookies = new Cookies();
+
+const apiClient = axios.create({
+    baseURL: BASE_URL,
+    headers: {
+        'Content-Type': 'application/json',
+    },
+});
+
+apiClient.interceptors.request.use(
+    (config) => {
+        const token = cookies.get('token');
+        if (token) {
+            config.headers['Authorization'] = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
 
 /**
  * API通信を行うための汎用関数
  *
  * @param {string} method - HTTPメソッド（GET, POST, PUT, DELETEなど）
- * @param {string} endpoint - APIエンドポイントのURL(呼び出し元でAPI_URLS()使用して定義)
+ * @param {string} endpoint - APIエンドポイントのURL
  * @param {Object|null} [data=null] - 送信するデータ（POSTやPUTリクエストの場合）
- * @param {string|null} [token=null] - トークン
  * @returns {Promise<any>} - APIからのレスポンスデータ
  * @throws {Error} - API通信エラーが発生した場合
- *
- * @example
- * // 固定エンドポイントを使用する場合
- * callApi('POST', API_URLS.LOGIN, { email, password })
- *   .then(response => { /* レスポンス処理 *\/ })
- *   .catch(error => { /* エラーハンドリング *\/ });
- *
- * @example
- * // 動的エンドポイントを使用する場合
- * const endpoint = API_URLS.GET_CHAT_BY_ID(chatId);
- * callApi('GET', endpoint)
- *   .then(data => { /* チャットデータの処理 *\/ })
- *   .catch(error => { /* エラーハンドリング *\/ });
  */
-export async function callApi(method, endpoint, data = null, token = null) {
+export async function callApi(method, endpoint, data = null) {
     try {
-        const headers = {
-            'Content-Type': 'application/json',
-        };
-
-        if (token) {
-            headers['Authorization'] = `Bearer ${token}`;
-        }
-
-        const response = await axios({
+        const response = await apiClient({
             method: method,
-            url: `${BASE_URL}${endpoint}`,
+            url: endpoint,
             data: data,
-            headers: headers,
-            withCredentials: true, // Cookieを含める場合
         });
         return response.data;
     } catch (error) {

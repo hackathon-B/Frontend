@@ -21,7 +21,7 @@ const ChatList = ({ userId, currentChat, setCurrentChat }) => {
     const [selectedChatId, setSelectedChatId] = useState(null);
 
     useEffect(() => {
-        const endpoint = `${API_URLS.GET_CHAT_LIST(userId)}`;
+        const endpoint = API_URLS.GET_CHAT_LIST;
         callApi('GET', endpoint, null)
         .then(response => {
           console.log(response);

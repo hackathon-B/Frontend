@@ -159,11 +159,10 @@ const ChatPage = () => {
         >
           {/* チャットウィンドウ */}
           {showMultiWindow ? (
-            // "messages"をprops"messages"として渡している (マルチウィンドウ)
-            <ChatWindowMaluti chatId={currentChat.id} messages={messages} />
+            // ここではchatIdをpropsとして渡している
+            <ChatWindowMaluti chatId={currentChat.id}/>
           ) : (
-            // "messages"をprops"messages"として渡している
-            <ChatWindow chatId={currentChat.id} messages={messages} />
+            <ChatWindow chatId={currentChat.id} />
           )}
 
 
