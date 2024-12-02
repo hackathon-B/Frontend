@@ -7,9 +7,9 @@ import { IconButton, Tooltip, TextField, Box, FormControl, InputLabel, Select, M
 import SendIcon from '@mui/icons-material/Send';
 import { theme } from '../../common/theme';
 
-const PostMessage = ({ chatId, messageCallback }) => {
+const PostMessage = ({ chatId, msgCallback }) => {
 
-    const [message, setMessage] = useState('');
+    const [msg, setMsg] = useState('');
     const [aiModelId, setAiModelId] = useState(1);
     // AIモデルのオプション
     const aiModels = [
@@ -19,52 +19,53 @@ const PostMessage = ({ chatId, messageCallback }) => {
     ];
 
       const handleSendMessage = () => {
-        if (!message.trim()) return;
+            if (!msg.trim()) return;
 
         const endpoint = chatId 
-          ? API_URLS.POST_MESSAGE(chatId)  // 既存のチャット
-          : API_URLS.POST_MESSAGE(0);      // 新規チャット
+            ? API_URLS.POST_MESSAGE(chatId)  // 既存のチャット
+            : API_URLS.POST_MESSAGE(0);      // 新規チャット
 
         const payload = { 
-          message_text: message, 
-          ai_model_id: parseInt(aiModelId, 10)
+            message_text: msg, 
+            ai_model_id: parseInt(aiModelId, 10)
         };
 
         callApi('POST', endpoint, payload)
-          .then(response => {
-            console.log('メッセージ送信成功:', response);
-            messageCallback(response);
-            setMessage('');
-          })
-          .catch(error => {
-            console.error('メッセージ送信エラー:', error);
-          });
+            .then(response => {
+                console.log('メッセージ送信成功:', response);
+                msgCallback(response);
+                // メッセージを空にする nullを使用しないのは、メッセージが空の場合にエラーが発生するため
+                setMsg('');
+            })
+            .catch(error => {
+                console.error('メッセージ送信エラー:', error);
+            });
       };
   
-      const handleKeyPress = (e) => {
-          // Windows の場合は ctrlKey、Mac の場合は metaKey (Command)
-          if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-              e.preventDefault();  // デフォルトの改行を防ぐ
-              handleSendMessage();
-          }
-      };
+    const handleKeyPress = (event) => {
+        // Windows の場合は ctrlKey、Mac の場合は metaKey (Command)
+        if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+            event.preventDefault();  // デフォルトの改行を防ぐ
+            handleSendMessage();
+        }
+    };
   
-      const handleModelChange = (e) => {
-          setAiModelId(e.target.value);
-      };
+    const handleModelChange = (event) => {
+        setAiModelId(event.target.value);
+    };
   
-  return (
-    <Box 
-        sx={{ 
-            display: 'flex',
-            flexDirection: { xs: 'column', md: 'row' },
-            alignItems: 'center',
-            height: 'auto',
-            width: '100%',
-            px: 8,
-            py: 1,
-            backgroundColor: 'secondary-light',
-            dark: {
+    return (
+        <Box 
+            sx={{ 
+                display: 'flex',
+                flexDirection: { xs: 'column', md: 'row' },
+                alignItems: 'center',
+                height: 'auto',
+                width: '100%',
+                px: 8,
+                py: 1,
+                backgroundColor: 'secondary-light',
+                dark: {
                 backgroundColor: 'secondary-dark',
             },
             gap: { xs: 2, md: 2 }
@@ -133,8 +134,8 @@ const PostMessage = ({ chatId, messageCallback }) => {
 
         <TextField
             placeholder="メッセージを入力してください"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            value={msg}
+            onChange={(event) => setMsg(event.target.value)}
             onKeyDown={handleKeyPress}
             variant="outlined"
             fullWidth

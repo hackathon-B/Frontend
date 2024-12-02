@@ -5,15 +5,16 @@ import { AuthContext } from '../store';
 // 共通
 import { callApi } from '../common/api';
 import { API_URLS } from '../common/constants';
-// モックデータのインポート
-import { mockMessages } from '../common/MockDatas';
+// モックデータのインポート 現在未使用
+// import { mockMessages } from '../common/MockDatas';
 // コンポーネント
 import Header from '../components/Header'
 import ChatWindow from '../components/chatComponents/ChatWindow'
 import ChatWindowMaluti from '../components/chatComponents/ChatWindowMaluti'
 import ChatList from '../components/ChatList'
 import DictionaryList from '../components/DictionaryList'
-import DictionaryEditor from '../components/DictionaryEditor'
+// マイ辞書 モーダル作成する
+// import DictionaryEditor from '../components/DictionaryEditor'
 // 分割
 import Split from 'split.js';
 import '../css/split.css';
@@ -30,7 +31,6 @@ const ChatPage = () => {
   const [open, setOpen] = useState(false);
   const [showMultiWindow, setShowMultiWindow] = useState(false);
   const [currentChat, setCurrentChat] = useState(null);
-  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     console.log('現在のチャット:', currentChat);
@@ -68,7 +68,7 @@ const ChatPage = () => {
       const endpoint = `${API_URLS.GET_CHAT(currentChat.chat_id)}`;
       callApi('GET', endpoint, null)
         .then(response => {
-          setMessages(response.messages);
+          setMessages(response.msgs);
         })
         .catch(error => {
           console.error(error);
@@ -84,7 +84,7 @@ const ChatPage = () => {
     <div className="w-full h-full flex flex-col relative bg-primary-light dark:bg-primary-dark">
       
       {/* Header */}
-      <div color="primary" className="h-10 flex items-center justify-between">
+      <div className="h-10 flex items-center justify-between">
         <Tooltip title={open ? "サイドバーを閉じる" : "サイドバーを開く"}>
           <IconButton 
             color="inherit"

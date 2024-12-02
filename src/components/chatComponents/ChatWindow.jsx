@@ -52,20 +52,20 @@ const ChatWindow = ({ chatId, setCurrentChat }) => {
   return (
     // チャットウィンドウの本体
     <div className="
-      flex flex-col h-screen
-      w-full max-w-4xl mx-auto
+      flex flex-col
+      h-screen w-full min-w-[400px]
       overflow-y-auto
       rounded-lg
       bg-secondary-light dark:bg-secondary-dark">
 
       {/* メッセージ表示領域 */}
       <div className="
-        h-4/5 
         flex flex-col 
+        h-4/5 
         overflow-y-auto 
         scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100
-        py-4 px-[4rem]
-        [mask-image:linear-gradient(to_bottom,transparent,black_10%,black_20%,black)]
+        py-4 px-[15%]
+        [mask-image:linear-gradient(to_bottom,transparent,black_10%,black)]
       ">
         {messages.length > 0 ? (
           <div className="flex flex-col">
@@ -80,7 +80,7 @@ const ChatWindow = ({ chatId, setCurrentChat }) => {
             ))}
           </div>
         ) : (
-          <div className="text-center text-gray-500">メッセージがありません</div>
+          <div className="text-[1.5rem] flex items-center justify-center h-full text-center text-gray-500">メッセージがありません</div>
         )}
       </div>
 

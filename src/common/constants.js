@@ -132,47 +132,47 @@ export const API_URLS = {
      * 辞書追加
      * @type {string}
      */
-    ADD_DICTIONARY: '/api/dictionary',
+    ADD_DICT: '/api/dictionary',
     /**
      * 辞書一覧取得
      * @type {string}
      */
-    GET_DICTIONARY_LIST: '/api/dictionary',
+    GET_DICT_LIST: '/api/dictionary',
     /**
      * 特定辞書情報取得
      * @function
      * @param {number|string} id - 辞書ID
      * @returns {string} 辞書情報取得用のURL
      * @example
-     * const endpoint = API_URLS.GET_DICTIONARY_BY_ID(789);
+     * const endpoint = API_URLS.GET_DICT(789);
      * // endpoint は "/api/dictionary/789" となる
      */
-    GET_DICTIONARY_BY_ID: (id) => `/api/dictionary/${id}`,
+    GET_DICT: (id) => `/api/dictionary/${id}`,
     /**
      * 特定辞書情報更新
      * @function
      * @param {number|string} id - 辞書ID
      * @returns {string} 辞書情報更新用のURL
      * @example
-     * const endpoint = API_URLS.UPDATE_DICTIONARY_BY_ID(789);
+     * const endpoint = API_URLS.UPDATE_DICT(789);
      * // endpoint は "/api/dictionary/789" となる
      */
-    UPDATE_DICTIONARY_BY_ID: (id) => `/api/dictionary/${id}`,
+    UPDATE_DICT: (id) => `/api/dictionary/${id}`,
     /**
      * 特定辞書削除
      * @function
      * @param {number|string} id - 辞書ID
      * @returns {string} 辞書削除用のURL
      * @example
-     * const endpoint = API_URLS.DELETE_DICTIONARY_BY_ID(789);
+     * const endpoint = API_URLS.DELETE_DICT(789);
      * // endpoint は "/api/dictionary/789" となる
      */
-    DELETE_DICTIONARY_BY_ID: (id) => `/api/dictionary/${id}`,
+    DELETE_DICT: (id) => `/api/dictionary/${id}`,
     /**
      * 辞書検索
      * @type {string}
      */
-    SEARCH_DICTIONARY: '/api/dictionary/search',
+    SEARCH_DICT: '/api/dictionary/search',
 
 
     // その他

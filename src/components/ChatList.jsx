@@ -6,23 +6,19 @@ import { callApi } from '../common/api';
 import Tooltip from '@mui/material/Tooltip'
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
+// import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 import IconButton from '@mui/material/IconButton'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import KeyboardDoubleArrowRightOutlinedIcon from '@mui/icons-material/KeyboardDoubleArrowRightOutlined';
 import LibraryAddOutlinedIcon from '@mui/icons-material/LibraryAddOutlined';
-
-import { mockChatList } from '../common/MockDatas';
-
 
 const ChatList = ({ userId, currentChat, setCurrentChat }) => {
     const [chatList, setChatList] = useState({});
     const [anchorEl, setAnchorEl] = useState(null);
     const [editChatTitle, setEditChatTitle] = useState('');
     // ダイアログ 削除
-    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+    // const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
     // ダイアログ 編集
-    const [openEditDialog, setOpenEditDialog] = useState(false);
+    // const [openEditDialog, setOpenEditDialog] = useState(false);
     // 選択中のチャットID
     const [selectedChatId, setSelectedChatId] = useState(null);
 
@@ -71,10 +67,12 @@ const ChatList = ({ userId, currentChat, setCurrentChat }) => {
     // チャット -削除-
     const handleDeleteClick = (selectedChatId) => {
         setSelectedChatId(selectedChatId);
-        setOpenDeleteDialog(true);
+        // setOpenDeleteDialog(true);
         handleMenuClose();
     };
+    
     // チャット -削除- 確認
+    /*
     const handleDeleteConfirm = () => {
         const endpoint = `${API_URLS.DELETE_CHAT(selectedChatId)}`;
         callApi('DELETE', endpoint, null)
@@ -94,6 +92,7 @@ const ChatList = ({ userId, currentChat, setCurrentChat }) => {
         setOpenDeleteDialog(false);
         setSelectedChatId(null);
     };
+    */
 
     return (
         <div className="
@@ -118,6 +117,7 @@ const ChatList = ({ userId, currentChat, setCurrentChat }) => {
                 {/* 別ウィンドウで開く */}
                 <Tooltip title="新規チャット">
                     <IconButton
+                        color="inherit"
                         size="medium"
                         aria-label="new-chat"
                         onClick={() => setCurrentChat(null)}
