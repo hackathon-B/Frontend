@@ -8,7 +8,7 @@ const ChatWindowMaluti = ({ chatId }) => {
   useEffect(() => {
     Split(['#split-0', '#split-1'], {
       sizes: [50, 50],
-      minSize: 100,
+      minSize: 400,
       gutterSize: 10,
       cursor: 'col-resize',
       direction: 'horizontal',
