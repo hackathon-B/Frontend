@@ -17,8 +17,16 @@ const PostMessage = ({ chatId, msgCallback }) => {
         { id: 2, name: 'claude-3.5-sonnet' },
         // 必要に応じて追加
     ];
-
-      const handleSendMessage = () => {
+  
+    const handleKeyPress = (event) => {
+        // Windows の場合は ctrlKey、Mac の場合は metaKey (Command)
+        if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+            event.preventDefault();  // デフォルトの改行を防ぐ
+            handleSendMessage();
+        }
+    };
+    
+    const handleSendMessage = () => {
             if (!msg.trim()) return;
 
         const endpoint = chatId 
@@ -41,14 +49,7 @@ const PostMessage = ({ chatId, msgCallback }) => {
                 console.error('メッセージ送信エラー:', error);
             });
       };
-  
-    const handleKeyPress = (event) => {
-        // Windows の場合は ctrlKey、Mac の場合は metaKey (Command)
-        if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
-            event.preventDefault();  // デフォルトの改行を防ぐ
-            handleSendMessage();
-        }
-    };
+
   
     const handleModelChange = (event) => {
         setAiModelId(event.target.value);
@@ -59,7 +60,7 @@ const PostMessage = ({ chatId, msgCallback }) => {
             sx={{ 
                 display: 'flex',
                 flexDirection: { xs: 'column', md: 'row' },
-                alignItems: 'center',
+                alignItems: 'flex-start',
                 height: 'auto',
                 width: '100%',
                 px: 8,
@@ -140,7 +141,7 @@ const PostMessage = ({ chatId, msgCallback }) => {
             variant="outlined"
             fullWidth
             multiline
-            maxRows={2}
+            maxRows={4}
             sx={{
                 width: '100%',
                 borderRadius: '0.375rem',
@@ -154,7 +155,7 @@ const PostMessage = ({ chatId, msgCallback }) => {
                 '& .MuiInputBase-input': {
                     textAlign: 'left',
                     verticalAlign: 'top',
-                    padding: '10px',
+                    padding: '15px',
                 }
             }}
             InputLabelProps={{

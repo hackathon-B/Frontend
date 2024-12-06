@@ -1,19 +1,19 @@
 import { useState, useContext } from 'react';
 import { useCookies } from 'react-cookie';
 import { AuthContext } from '../store.jsx';
-
-import { callApi } from '../common/api.js';
-import { Box, TextField, Button, Typography, Paper, } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+// 共通
+import { callApi } from '../common/api.js';
 import { API_URLS } from '../common/constants.js';
-
+// MUI
+import { Box, TextField, Button, Typography, Paper, } from '@mui/material';
 
 function SignUpPage() {
     const { setUserInfo } = useContext(AuthContext);
     const [, setCookies] = useCookies(['token']);
     const navigate = useNavigate();
-    const [email,setEmail] = useState("");
-    const [password,setPassword] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [errors, setErrors] = useState({ 
         email: "",
         password: "",
@@ -61,19 +61,23 @@ function SignUpPage() {
         }
 
         try {
-            const token = await callApi('POST', `${API_URLS.REGISTER}`, {
+            const response = await callApi('POST', `${API_URLS.REGISTER}`, {
                 email,
                 password,
             });
 
-            if (token) {
-                // トークンをcookieに保存
-                setCookies('token', token, {
+            if (response && response.token) {
+                // トークンをcookieに保存（オブジェクトではなく文字列として保存）
+                setCookies('token', response.token, {
                     path: '/',
                     maxAge: 3600 * 24 * 7,
                     sameSite: 'none',
                     secure: true
                 });
+
+                // ローザー情報を取得して設定
+                const userData = await callApi('GET', API_URLS.GET_USER, null, response.token);
+                setUserInfo(userData);
 
                 // チャットページにリダイレクト
                 navigate('/');

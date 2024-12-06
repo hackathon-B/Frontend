@@ -1,56 +1,73 @@
-import LaunchIcon from '@mui/icons-material/Launch'
-import IconButton from '@mui/material/IconButton'
-import Tooltip from '@mui/material/Tooltip'
+import {useEffect} from 'react';
+// 共通
+import { API_URLS } from '../common/constants';
+import { callApi } from '../common/api';
+// MUI コンポーネント
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 
-const DictionaryEditor = () => {
-  return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      height: '100%',
-      border: '1px solid #ccc',
-      borderRadius: '4px',
-    }}>
-      {/* タイトル入力 */}
-      <textarea
-        placeholder="Dictionary Title"
-        maxLength={100}  // 100文字まで
-        style={{
-          flex: '0 0 auto',
-          minHeight: '39px',
-          maxHeight: '100px',
-          padding: '0.5rem',
-          resize: 'vertical',
-          backgroundColor: '#ffffff',
-          border: '1px solid #ccc',
-          fontFamily: 'inherit'
-        }}
-      />
-      
-      <Tooltip title="サイドバーを開く">
-        <IconButton 
-            size="medium"
-            sx={{ width: '40px', height: '40px'}}
-          >
-            <LaunchIcon />
-        </IconButton>
-      </Tooltip>
 
-      {/* 説明入力 */}
-      <textarea
-        placeholder="Dictionary Description"
-        style={{
-          flex: '1 1 auto',
-          minHeight: '39px',
-          padding: '0.5rem',
-          resize: 'none',
-          backgroundColor: '#ffffff',
-          border: '1px solid #ccc',
-          fontFamily: 'inherit'
-        }}
-      />
-    </div>
-  );
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: '#CCC',
+  dark: {
+    bgcolor: '#333',
+  },
+  border: '2px solid #000',
+  boxShadow: 24,
+  pt: 2,
+  px: 4,
+  pb: 3,
 };
 
-export default DictionaryEditor
+export function DictionaryEditor({ open, handleClose, dictId }) {
+  const [dict, setDict] = useState(null);
+
+  useEffect(() => {
+    const endpoint = API_URLS.GET_DICT(dictId);
+    if (!dictId) return;
+    callApi('GET', endpoint)
+      .then(response => {
+        console.log(response.data);
+        setDict(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  },[dictId])
+
+  const postDict = () => {
+    const endpoint = API_URLS.UPDATE_DICT(dictId);
+    callApi('PUT', endpoint, dict)
+      .then(response => {
+        console.log(response.data);
+        handleClose();
+        msgClear();
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
+  const msgClear = () => {
+    setDict(null);
+  }
+  return (
+
+<Modal  sx={style} open={open} onClose={handleClose}>
+  <Box>
+    <h2>Dictionary Editor</h2>
+    <TextField label="Title" value={dict?.title} />
+    <TextField label="Description" value={dict?.description} />
+    <Button variant="contained" color="primary" onClick={postDict}>Save</Button>
+  </Box>
+</Modal> );
+}
+
+export default DictionaryEditor;

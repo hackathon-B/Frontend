@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import DictionaryEditor from './DictionaryEditor';
 // 共通
 import { API_URLS } from '../common/constants';
 import { callApi } from '../common/api';
@@ -12,11 +13,13 @@ import LibraryAddOutlinedIcon from '@mui/icons-material/LibraryAddOutlined';
 
 
 
-const DictList = ({ userId, setCurrentDict }) => {
+const DictList = ({ userId }) => {
     const [dictList, setDictList] = useState({});
     const [anchorEl, setAnchorEl] = useState(null);
     const [currDict, setCurrDict] = useState(null);
     const [editDictTitle, setEditDictTitle] = useState('');
+    const [isEditorOpen, setIsEditorOpen] = useState(false);
+    const [selectedDictId, setSelectedDictId] = useState(null);
 
     useEffect(() => {
         const endpoint = API_URLS.GET_DICT_LIST;
@@ -27,7 +30,7 @@ const DictList = ({ userId, setCurrentDict }) => {
         })
         .catch(error => {
           console.error(error);
-          })
+        })
     }, [userId, dictList.length]);
 
     // メニューボタン 開く
@@ -53,19 +56,28 @@ const DictList = ({ userId, setCurrentDict }) => {
     }, [currDict]);
     */
 
-    // 辞書 -編集-
+    // モーダルを開く 辞書編集
     const handleEditDict = (selectedDictId) => {
         console.log(`Editing dict ${selectedDictId}`);
         handleMenuClose();
-        // 編集のロジックをここに追加
+        setSelectedDictId(selectedDictId);
+        setIsEditorOpen(true); // モーダルを開く
     };
 
+    // モーダルを閉じる
+    const handleEditorClose = () => {
+        setIsEditorOpen(false);
+        setSelectedDictId(null);
+    };
+    
     // 辞書 -削除-
     const handleDeleteClick = (selectedDictId) => {
         setSelectedDictId(selectedDictId);
         setOpenDeleteDialog(true);
         handleMenuClose();
     };
+
+
 
     return (
         <div className="
@@ -93,7 +105,7 @@ const DictList = ({ userId, setCurrentDict }) => {
                         color="inherit"
                         size="medium"
                         aria-label="new-dict"
-                        onClick={() => setCurrentDict(null)}
+                        onClick={() => setIsEditorOpen(true)}
                         sx={{ 
                             width: '40px', 
                             height: '40px',
@@ -169,6 +181,15 @@ const DictList = ({ userId, setCurrentDict }) => {
                     </div>
                 )}
             </div>
+
+            {/* DictionaryEditor モーダルを展開 条件付きでレンダリングしている */}
+            {isEditorOpen && (
+                <DictionaryEditor 
+                    open={isEditorOpen} 
+                    handleClose={handleEditorClose} 
+                    dictId={selectedDictId}
+                />
+            )}
         </div>
     );
 };

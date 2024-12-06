@@ -1,3 +1,5 @@
+import ReactMarkdown from 'react-markdown';
+
 export const Message = ({ id, message, who, created_at }) => {
   return (
     <div className={`
@@ -8,14 +10,10 @@ export const Message = ({ id, message, who, created_at }) => {
       border-[0.5px]
       ${who === 'user' ? 'border-[#808080]' : 'border-none'}
       ${who === 'user' ? 'ml-auto w-[90%]' : 'mr-auto w-full'} 
-      ${who === 'user' 
-        ? 'bg-white dark:bg-[#272727]' 
-        : 'bg-none'
-      }
+      ${who === 'user' ? 'bg-white dark:bg-[#272727]' : 'bg-none'}
       text-gray-600 dark:text-gray-300
     `}>
-
-      <p>{message}</p>
+      <ReactMarkdown>{message}</ReactMarkdown>
       <span className="text-xs text-gray-500 dark:text-gray-400">
         {new Date(created_at).toLocaleString()}
       </span>

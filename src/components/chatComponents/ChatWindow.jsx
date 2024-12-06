@@ -86,7 +86,7 @@ const ChatWindow = ({ chatId, setCurrentChat }) => {
 
       {/* メッセージ送信フォーム */}
       <div className="h-1/5">
-        <PostMessage chatId={chatId} messageCallback={handleNewMessages} />
+        <PostMessage chatId={chatId} msgCallback={handleNewMessages} />
       </div>
 
     </div>
