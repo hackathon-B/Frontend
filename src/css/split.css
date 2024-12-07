@@ -1,22 +1,22 @@
 .split-row {
-  display: flex;
-  flex-direction: row;
+	display: flex;
+	flex-direction: row;
 }
 
 .split-column {
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 .gutter {
-  min-width: 10px;  /* 横方向のgutter */
-  min-height: 10px; /* 縦方向のgutter */
+	min-width: 10px;  /* 横方向のgutter */
+	min-height: 10px; /* 縦方向のgutter */
 }
 
 .gutter.gutter-horizontal {
-  cursor: col-resize;
+	cursor: col-resize;
 }
 
 .gutter.gutter-vertical {
-  cursor: row-resize;
+	cursor: row-resize;
 }

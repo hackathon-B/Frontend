@@ -7,47 +7,47 @@ import Message from './Message';
 import PostMessage from './PostMessage';
 
 const ChatWindow = ({ chatId, setCurrentChat }) => {
-  const [messages, setMessages] = useState([]);
+	const [messages, setMessages] = useState([]);
 
-  useEffect(() => {
-    console.log('ChatWindow の chatId:', chatId);
-    if (chatId) {
-      // chatIdに紐づくmessagesを全て取得
-      const endpoint = `${API_URLS.GET_CHAT_MESSAGES(chatId)}`;
-      callApi('GET', endpoint, null)
-        .then(response => {
-          const chatMessages = response;
-          setMessages(chatMessages.messages);
-          console.log('取得した messages:', chatMessages.messages);
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    } else {
-      setMessages([]); // chatId がない場合はメッセージをリセット
-    }
-  }, [chatId]);
+	useEffect(() => {
+		console.log('ChatWindow の chatId:', chatId);
+		if (chatId) {
+			// chatIdに紐づくmessagesを全て取得
+			const endpoint = `${API_URLS.GET_CHAT_MESSAGES(chatId)}`;
+			callApi('GET', endpoint, null)
+			.then(response => {
+				const chatMessages = response;
+				setMessages(chatMessages.messages);
+				console.log('取得した messages:', chatMessages.messages);
+			})
+			.catch(error => {
+				console.error(error);
+			});
+		} else {
+			setMessages([]); // chatId がない場合はメッセージをリセット
+		}
+	}, [chatId]);
 
-  useEffect(() => {
-    // メッセージが更新されたら最下部にスクロール
-    const messageContainer = document.querySelector('.overflow-y-auto');
-    if (messageContainer) {
-      messageContainer.scrollTop = messageContainer.scrollHeight;
-    }
-  }, [messages]); // messagesが更新されるたびに実行
+	useEffect(() => {
+		// メッセージが更新されたら最下部にスクロール
+		const messageContainer = document.querySelector('.overflow-y-auto');
+			if (messageContainer) {
+				messageContainer.scrollTop = messageContainer.scrollHeight;
+			}
+		}, [messages]); // messagesが更新されるたびに実行	
 
-  // メッセージを追加するコールバック関数
-  const handleNewMessages = (response) => {
-    console.log('New messages received:', response);  // デバッグ用
-    
-    // 新しいメッセージを既存のメッセージ配列に追加
-    setMessages(response.messages);
+	// メッセージを追加するコールバック関数
+	const handleNewMessages = (response) => {
+		console.log('New messages received:', response);  // デバッグ用
+		
+		// 新しいメッセージを既存のメッセージ配列に追加
+		setMessages(response.messages);
 
-    // chatIdが変更された場合、親に通知
-    if (response.chat_id && response.chat_id !== chatId) {
-      setCurrentChat(response.chat_id);
-    }
-  };
+		// chatIdが変更された場合、親に通知
+		if (response.chat_id && response.chat_id !== chatId) {
+		setCurrentChat(response.chat_id);
+		}
+	};
 
   return (
     // チャットウィンドウの本体

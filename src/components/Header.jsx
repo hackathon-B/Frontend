@@ -10,66 +10,66 @@ import { useCookies } from 'react-cookie';
 import { AuthContext } from '../store.jsx';
 
 const Header = ({ userEmail }) => {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const navigate = useNavigate();
-  const [, , removeCookie] = useCookies(['token']);
-  const { setUserInfo } = useContext(AuthContext);
+	const [anchorEl, setAnchorEl] = useState(null);
+	const navigate = useNavigate();
+	const [, , removeCookie] = useCookies(['token']);
+	const { setUserInfo } = useContext(AuthContext);
 
-  const handleMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+	const handleMenuOpen = (event) => {
+		setAnchorEl(event.currentTarget);
+	};
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
+	const handleMenuClose = () => {
+		setAnchorEl(null);
+	};
 
-  const handleLogout = () => {
+	const handleLogout = () => {
 
-    callApi('POST', API_URLS.LOGOUT)
-    .then(response => {
-      console.log('ログアウト成功:', response);
-    })
-    .catch(error => {
-      console.error('ログアウトエラー:', error);
-    });
+		callApi('POST', API_URLS.LOGOUT)
+		.then(response => {
+			console.log('ログアウト成功:', response);
+		})
+		.catch(error => {
+			console.error('ログアウトエラー:', error);
+		});
 
-    removeCookie('token', { path: '/' }); // トークンを削除
-    setUserInfo(null); // ユーザー情報をクリア
-    navigate('/login'); // ログインページにリダイレクト
-  };
+		removeCookie('token', { path: '/' }); // トークンを削除
+		setUserInfo(null); // ユーザー情報をクリア
+		navigate('/login'); // ログインページにリダイレクト
+	};
 
   return (
     <>
-        <div className="relative h-10 flex justify-end items-center bg-primary-light dark:bg-primary-dark p-4">
-          <div className="text-text-light dark:text-text-dark mr-4">{userEmail}</div>
+		<div className="relative h-10 flex justify-end items-center bg-primary-light dark:bg-primary-dark p-4">
+			<div className="text-text-light dark:text-text-dark mr-4">{userEmail}</div>
 
-          <IconButton 
-            edge="start" 
-            color="inherit" 
-            aria-label="menu" 
-            onClick={handleMenuOpen} 
-            sx={{ width: '40px', height: '40px', color: 'text-text-light dark:text-text-dark' }}
-          >
-            <MenuIcon />
-          </IconButton>
+			<IconButton 
+				edge="start" 
+				color="inherit" 
+				aria-label="menu" 
+				onClick={handleMenuOpen} 
+				sx={{ width: '40px', height: '40px', color: 'text-text-light dark:text-text-dark' }}
+			>
+				<MenuIcon />
+			</IconButton>
 
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleMenuClose}
-            sx={{
-              '& .MuiPaper-root': {
-                backgroundColor: (theme) => 
-                  theme.palette.mode === 'dark' ? '#333' : '#fff',
-                color: (theme) => 
-                  theme.palette.mode === 'dark' ? '#fff' : '#000'
-              }
-            }}
-          >
-            <MenuItem onClick={handleMenuClose}>設定</MenuItem>
-            <MenuItem onClick={handleLogout}>ログアウト</MenuItem>
-          </Menu>
-        </div>
+			<Menu
+				anchorEl={anchorEl}
+				open={Boolean(anchorEl)}
+				onClose={handleMenuClose}
+				sx={{
+				'& .MuiPaper-root': {
+					backgroundColor: (theme) => 
+					theme.palette.mode === 'dark' ? '#333' : '#fff',
+					color: (theme) => 
+					theme.palette.mode === 'dark' ? '#fff' : '#000'
+				}
+				}}
+			>
+				<MenuItem onClick={handleMenuClose}>設定</MenuItem>
+				<MenuItem onClick={handleLogout}>ログアウト</MenuItem>
+			</Menu>
+		</div>
     </>
   )
 }

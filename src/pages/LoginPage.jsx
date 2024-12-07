@@ -75,7 +75,7 @@ function LoginPage() {
                     secure: true
                 });
 
-                // ローザー情報を取得して設定
+                // ユーザー情報を取得して設定
                 const userData = await callApi('GET', API_URLS.GET_USER, null, response.token);
                 setUserInfo(userData);
 
@@ -97,93 +97,95 @@ function LoginPage() {
     };
 
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
-            <Paper elevation={8} sx={{ padding: '40px'  }}>
-                <Typography variant="h3" gutterBottom sx={{ 
-                    paddingBottom: '1em', 
-                    textAlign: 'center', 
-                    fontFamily: "'Bubblegum Sans', cursive", 
-                    color: 'black',
-                    textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
-                }}>
-                    Fucabo
-                </Typography>
+        <>
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+                <Paper elevation={8} sx={{ padding: '40px'  }}>
+                    <Typography variant="h3" gutterBottom sx={{ 
+                        paddingBottom: '1em', 
+                        textAlign: 'center', 
+                        fontFamily: "'Bubblegum Sans', cursive", 
+                        color: 'black',
+                        textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
+                    }}>
+                        Fucabo
+                    </Typography>
 
-                <Box component="form" onSubmit={handleLogin} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '40px' }}>
-                    <TextField
-                        id="email"
-                        label="e-mail"
-                        variant="outlined"
-                        type="email"
-                        value={email}
-                        onChange={e => {
-                            setEmail(e.target.value); // 入力値をステートに設定
-                            setErrors(prev => ({      // エラー状態を更新
-                                ...prev,              // 既存のエラー状態を維持
-                                email: "",            // メールアドレスのエラーをクリア
-                                submit: ""            // 送信時のエラーもクリア
-                            }));
-                        }}
-                        error={!!errors.email}        // エラーの有無を真偽値に変換
-                        helperText={errors.email}     // エラーメッセージを表示
-                        fullWidth
-                        required                      // フィールドを必須項目に設定
-                        autoComplete='email'          // ブラウザに保存されていれば使用する
-                        InputLabelProps={{ required: false }}  // ラベルの*は非表示
-                        sx={{ height: '40px'}}
-                    />
-
-                    <TextField
-                        id="password"
-                        label="password"
-                        variant="outlined"
-                        type="password"
-                        value={password}
-                        onChange={e => {
-                            setPassword(e.target.value);
-                            setErrors(prev => ({
-                                ...prev,
-                                password: "",
-                                submit: ""
-                            }));
-                        }}
-                        error={!!errors.password}
-                        helperText={errors.password}
-                        fullWidth
-                        required
-                        autoComplete='current-password'
-                        InputLabelProps={{ required: false }}
-                        sx={{ height: '40px' }}
-                    />
-
-                    {errors.submit && (
-                        <Typography
-                            color='error' 
-                            sx={{ mb: 2, textAlign: 'center' }}
-                        >
-                            {errors.submit}
-                        </Typography>
-                    )}
-
-                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1em', marginTop: 2 }}>
-                        <Button variant="contained" color="primary" type="submit" sx={{ width: '16em' }}>
-                            Login
-                        </Button>
-                        <Button variant="contained" color="success" type="submit" onClick={() => navigate('/signUp')} sx={{ width: '16em' }}>
-                            新規登録
-                        </Button>
-                        <Link
-                            href="#"
-                            sx={{
-                                fontSize: '0.875rem',
+                    <Box component="form" onSubmit={handleLogin} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '40px' }}>
+                        <TextField
+                            id="email"
+                            label="e-mail"
+                            variant="outlined"
+                            type="email"
+                            value={email}
+                            onChange={e => {
+                                setEmail(e.target.value); // 入力値をステートに設定
+                                setErrors(prev => ({      // エラー状態を更新
+                                    ...prev,              // 既存のエラー状態を維持
+                                    email: "",            // メールアドレスのエラーをクリア
+                                    submit: ""            // 送信時のエラーもクリア
+                                }));
                             }}
-                        >
-                            パスワードを忘れた方はこちら
-                        </Link>
+                            error={!!errors.email}        // エラーの有無を真偽値に変換
+                            helperText={errors.email}     // エラーメッセージを表示
+                            fullWidth
+                            required                      // フィールドを必須項目に設定
+                            autoComplete='email'          // ブラウザに保存されていれば使用する
+                            InputLabelProps={{ required: false }}  // ラベルの*は非表示
+                            sx={{ height: '40px'}}
+                        />
+
+                        <TextField
+                            id="password"
+                            label="password"
+                            variant="outlined"
+                            type="password"
+                            value={password}
+                            onChange={e => {
+                                setPassword(e.target.value);
+                                setErrors(prev => ({
+                                    ...prev,
+                                    password: "",
+                                    submit: ""
+                                }));
+                            }}
+                            error={!!errors.password}
+                            helperText={errors.password}
+                            fullWidth
+                            required
+                            autoComplete='current-password'
+                            InputLabelProps={{ required: false }}
+                            sx={{ height: '40px' }}
+                        />
+
+                        {errors.submit && (
+                            <Typography
+                                color='error' 
+                                sx={{ mb: 2, textAlign: 'center' }}
+                            >
+                                {errors.submit}
+                            </Typography>
+                        )}
+
+                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1em', marginTop: 2 }}>
+                            <Button variant="contained" color="primary" type="submit" sx={{ width: '16em' }}>
+                                Login
+                            </Button>
+                            <Button variant="contained" color="success" type="submit" onClick={() => navigate('/signUp')} sx={{ width: '16em' }}>
+                                新規登録
+                            </Button>
+                            <Link
+                                href="#"
+                                sx={{
+                                    fontSize: '0.875rem',
+                                }}
+                            >
+                                パスワードを忘れた方はこちら
+                            </Link>
+                        </Box>
                     </Box>
-                </Box>
-            </Paper>
-        </Box>
+                </Paper>
+            </Box>
+        </>
     );
 };
 

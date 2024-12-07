@@ -75,7 +75,7 @@ function SignUpPage() {
                     secure: true
                 });
 
-                // ローザー情報を取得して設定
+                // ユーザー情報を取得して設定
                 const userData = await callApi('GET', API_URLS.GET_USER, null, response.token);
                 setUserInfo(userData);
 

@@ -80,142 +80,143 @@ const ChatPage = () => {
 	};
 
 	return (
-		<div className="w-full h-full flex flex-col relative bg-primary-light dark:bg-primary-dark">
-		
-			{/* Header */}
-			<div className="h-10 flex items-center justify-between">
-				<Tooltip title={open ? "サイドバーを閉じる" : "サイドバーを開く"}>
-					<IconButton 
-						color="inherit"
-						onClick={handleDrawerToggle}
-						size="medium"
-						sx={{ width: '40px', height: '40px'}}
-					>
-						<KeyboardDoubleArrowRightIcon 
-							sx={{ 
-								transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
-								transition: 'transform 0.3s ease'
-							}} 
-						/>
-					</IconButton>
-				</Tooltip>
-				
-				<Header userEmail={userInfo?.email}/>
+		<>
+			<div className="w-full h-full flex flex-col relative bg-primary-light dark:bg-primary-dark">
 			
-			</div>
-
-		{/* Body */}
-		<div color="primary"
-			className="
-			flex flex-row
-			relative
-			h-[calc(100vh-40px)]
-			min-h-0
-			overflow-hidden
-		">
-			
-		{/* Sidebar */}
-		<Box color="secondary"
-			sx={{
-				width: open ? '300px' : '0px',
-				height: '100%',
-				transition: 'width 0.3s ease',
-				overflow: 'hidden',
-				paddingBottom: '80px'
-			}}
-		>
-			<Drawer
-				color="secondary"
-				variant="persistent"
-				open={open}
-				sx={{
-				'& .MuiDrawer-paper': {
-					height: 'calc(100vh - 40px)',
-					width: '301px',
-					position: 'relative',
-					transition: 'width 0.3s ease',
-				},
-				}}
-			>
-
-				{/* Sidebar Content */}
-				<div className="
-					split-column flex flex-col
-					px-4 py-2 h-full
-					bg-primary-light dark:bg-primary-dark
-				">
-					<div id="chat-list">
-						{/* チャットリスト */}
-						<ChatList 
-							userId={userInfo?.user_id}
-							currentChat={currentChat}
-							setCurrentChat={setCurrentChat}
-						/>
-					</div>
-					<div id="dictionary-list">
-						{/* 辞書リスト */}
-						<DictionaryList
-							userId={userInfo?.user_id}
-						 />
-					</div>
-				</div>
-				
-			</Drawer>
-		</Box>
-
-		{/* Main Content */}
-		<Box 
-		sx={{ 
-			width: open ? 'calc(100% - 300px)' : '100%',
-			height: 'calc(100vh - 40px)',
-			transition: 'width 0.3s ease',
-			position: 'relative',
-			backgroundColor: 'gray-100',
-			dark: {
-			backgroundColor: 'gray-800',
-			},
-		}}
-		>
-			{/* チャットウィンドウ */}
-			{showMultiWindow ? (
-				// ここではchatIdをpropsとして渡している
-				<ChatWindowMaluti chatId={currentChat?.chat_id} setCurrentChat={setCurrentChat}/>
-			) : (
-				<ChatWindow chatId={currentChat?.chat_id} setCurrentChat={setCurrentChat}/>
-			)}
-
-			{/* チャットウィンドウを追加 */ }
-			<div className="absolute top-3 right-3 z-50">
-				<Tooltip 
-					title="チャットウィンドウを追加" 
-					>
+				{/* Header */}
+				<div className="h-10 flex items-center justify-between">
+					<Tooltip title={open ? "サイドバーを閉じる" : "サイドバーを開く"}>
 						<IconButton 
-							onClick={() => setShowMultiWindow(prevState => !prevState)}
-							size="large"
-							sx={{ 
-								width: '40px',
-								height: '40px',
-								backgroundColor: 'black',
-								dark: {
-									backgroundColor: 'gray-400',
-								},
-								'&:hover': {
-									backgroundColor: 'gray',
-									dark: {
-										backgroundColor: 'darkgray',
-									},
-								},
-							color: 'white',
-							boxShadow: 3
-							}}
+							color="inherit"
+							onClick={handleDrawerToggle}
+							size="medium"
+							sx={{ width: '40px', height: '40px'}}
 						>
-							<AddIcon />
+							<KeyboardDoubleArrowRightIcon 
+								sx={{ 
+									transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
+									transition: 'transform 0.3s ease'
+								}} 
+							/>
 						</IconButton>
 					</Tooltip>
+					
+					<Header userEmail={userInfo?.email} />
+				
 				</div>
-			</Box>
-		</div>
-		</div>
+
+				{/* Body */}
+				<div color="primary"
+					className="
+					flex flex-row
+					relative
+					h-[calc(100vh-40px)]
+					min-h-0
+					overflow-hidden
+				">
+					
+					{/* Sidebar */}
+					<Box color="secondary"
+						sx={{
+							width: open ? '300px' : '0px',
+							height: '100%',
+							transition: 'width 0.3s ease',
+							overflow: 'hidden',
+							paddingBottom: '80px'
+						}}
+					>
+						<Drawer
+							color="secondary"
+							variant="persistent"
+							open={open}
+							sx={{
+							'& .MuiDrawer-paper': {
+								height: 'calc(100vh - 40px)',
+								width: '301px',
+								position: 'relative',
+								transition: 'width 0.3s ease',
+							},
+							}}
+						>
+
+							{/* Sidebar Content */}
+							<div className="
+								split-column flex flex-col
+								px-4 py-2 h-full
+								bg-primary-light dark:bg-primary-dark
+							">
+								<div id="chat-list">
+									{/* チャットリスト */}
+									<ChatList 
+										userId={userInfo?.user_id}
+										currentChat={currentChat}
+										setCurrentChat={setCurrentChat}
+									/>
+								</div>
+								<div id="dictionary-list">
+									{/* 辞書リスト */}
+									<DictionaryList
+										userId={userInfo?.user_id}
+									/>
+								</div>
+							</div>
+						</Drawer>
+					</Box>
+
+					{/* Main Content */}
+					<Box 
+						sx={{ 
+							width: open ? 'calc(100% - 300px)' : '100%',
+							height: 'calc(100vh - 40px)',
+							transition: 'width 0.3s ease',
+							position: 'relative',
+							backgroundColor: 'gray-100',
+							dark: {
+							backgroundColor: 'gray-800',
+							},
+						}}
+					>
+						{/* チャットウィンドウ */}
+						{showMultiWindow ? (
+							// ここではchatIdをpropsとして渡している
+							<ChatWindowMaluti chatId={currentChat?.chat_id} setCurrentChat={setCurrentChat}/>
+						) : (
+							<ChatWindow chatId={currentChat?.chat_id} setCurrentChat={setCurrentChat}/>
+						)}
+
+						{/* チャットウィンドウを追加 */ }
+						<div className="absolute top-3 right-3 z-50">
+							<Tooltip 
+								title="チャットウィンドウを追加" 
+							>
+								<IconButton 
+									onClick={() => setShowMultiWindow(prevState => !prevState)}
+									size="large"
+									sx={{ 
+										width: '40px',
+										height: '40px',
+										backgroundColor: 'black',
+										dark: {
+											backgroundColor: 'gray-400',
+										},
+										'&:hover': {
+											backgroundColor: 'gray',
+											dark: {
+												backgroundColor: 'darkgray',
+											},
+										},
+									color: 'white',
+									boxShadow: 3
+									}}
+								>
+									<AddIcon />
+								</IconButton>
+							</Tooltip>
+						</div>
+					</Box>
+				</div>
+			</div>
+		</>
 	);
 };
 

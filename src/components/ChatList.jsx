@@ -26,12 +26,12 @@ const ChatList = ({ userId, currentChat, setCurrentChat }) => {
         const endpoint = API_URLS.GET_CHAT_LIST;
         callApi('GET', endpoint, null)
         .then(response => {
-          console.log(response);
-          setChatList(response.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at)));
+            console.log(response);
+            setChatList(response.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at)));
         })
         .catch(error => {
-          console.error(error);
-          })
+            console.error(error);
+            })
     }, [userId, chatList.length]);
 
     // メニューボタン 開く
@@ -197,7 +197,8 @@ const ChatList = ({ userId, currentChat, setCurrentChat }) => {
                 )}
             </div>
 
-            {/* チャット -削除- ダイアログ 
+            {/*
+            チャット -削除- ダイアログ 
             {openDeleteDialog && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                     <div className="bg-white dark:bg-gray-800 p-6 rounded-lg">
