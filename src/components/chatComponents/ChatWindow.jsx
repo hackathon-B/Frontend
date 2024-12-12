@@ -40,8 +40,8 @@ const ChatWindow = ({ chatId, setCurrentChat }) => {
 	const handleNewMessages = (response) => {
 		console.log('New messages received:', response);  // デバッグ用
 		
-		// 新しいメッセージを既存のメッセージ配列に追加
-		setMessages(response.messages);
+		// 新しいメッセージを既存のメッセージ配列に追加　
+		setMessages(response.messages); //:TODO メッセージの追加方法がわからない
 
 		// chatIdが変更された場合、親に通知
 		if (response.chat_id && response.chat_id !== chatId) {

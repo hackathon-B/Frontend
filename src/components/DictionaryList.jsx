@@ -14,24 +14,24 @@ import LibraryAddOutlinedIcon from '@mui/icons-material/LibraryAddOutlined';
 
 
 const DictList = ({ userId }) => {
-    const [dictList, setDictList] = useState({});
-    const [anchorEl, setAnchorEl] = useState(null);
+    const [dictionaries, setDictionaries] = useState([]);
     const [currDict, setCurrDict] = useState(null);
-    const [editDictTitle, setEditDictTitle] = useState('');
-    const [isEditorOpen, setIsEditorOpen] = useState(false);
     const [selectedDictId, setSelectedDictId] = useState(null);
+    //ハンドラ
+    const [isEditorOpen, setIsEditorOpen] = useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
 
     useEffect(() => {
         const endpoint = API_URLS.GET_DICT_LIST;
         callApi('GET', endpoint, null)
         .then(response => {
-          console.log(response);
-          setDictList(response.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at)));
+            console.log(response);
+            setDictionaries(response.dictionaries.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at)));
         })
         .catch(error => {
-          console.error(error);
-        })
-    }, [userId, dictList.length]);
+            console.error(error);
+            })
+    }, [userId]);
 
     // メニューボタン 開く
     const handleMenuOpen = (event) => {
@@ -43,8 +43,8 @@ const DictList = ({ userId }) => {
     };
 
     // 辞書 -選択-
-    const handleDictSelect = (dictId) => {
-        const selectedDict = dictList.find(dict => dict.dict_id === dictId);
+    const handleDictSelect = (dictionary_id) => {
+        const selectedDict = dictionaries.find(dict => dict.id === dictionary_id);
         setCurrDict(selectedDict);
         console.log('dictListからを渡しました', selectedDict);
     };
@@ -67,7 +67,6 @@ const DictList = ({ userId }) => {
     // モーダルを閉じる
     const handleEditorClose = () => {
         setIsEditorOpen(false);
-        setSelectedDictId(null);
     };
     
     // 辞書 -削除-
@@ -75,6 +74,13 @@ const DictList = ({ userId }) => {
         setSelectedDictId(selectedDictId);
         setOpenDeleteDialog(true);
         handleMenuClose();
+    };
+
+    // 新しい辞書を追加する関数
+    const addDictionary = (newDict) => {
+        setDictionaries(prevList => ({
+            dictionaries: [newDict, ...(prevList.dictionaries || [])]
+        }));
     };
 
 
@@ -119,13 +125,13 @@ const DictList = ({ userId }) => {
 
             {/* 辞書リストの本体 */}
             <div className="bg-secondary-light dark:bg-secondary-dark">
-                {dictList.length > 0 ? (
+                {dictionaries?.length > 0 ? (
                     // 辞書リストのアイテム マッピング
-                    dictList.map((dict) => (
+                    dictionaries.map((dict) => (
                         <div
-                            key={dict.dict_id}
+                            key={dict.id}
                             // 辞書リストのアイテムをクリックした時の処理
-                            onClick={() => handleDictSelect(dict.dict_id)}
+                            onClick={() => handleDictSelect(dict.id)}
                             // マウスオーバー時の背景色
                             // 現在選択中の辞書の背景色
                                 className={`
@@ -133,19 +139,19 @@ const DictList = ({ userId }) => {
                                 px-3 py-0
                                 cursor-pointer
                                 hover:bg-gray-400 dark:hover:bg-gray-600
-                                ${currDict?.dict_id === dict.dict_id ? 'bg-gray-300 dark:bg-gray-700' : ''}
+                                ${currDict?.id === dict.id ? 'bg-gray-300 dark:bg-gray-700' : ''}
                             `}
                         >
                             {/* 辞書タイトル */}
                             <span className="truncate max-w-[200px] text-sm text-gray-800 dark:text-gray-200">
-                                {dict.dict_title}
+                                {dict.term}
                             </span>
 
                             {/* メニューボタン */}
                             <button className={`
                                 p-1
                                 opacity-0
-                                ${currDict?.dict_id === dict.dict_id ? 'opacity-100' : 'opacity-0'}
+                                ${currDict?.id === dict.id ? 'opacity-100' : 'opacity-0'}
                                 transition-opacity
                             `}>
                             <MoreVertIcon 
@@ -166,8 +172,8 @@ const DictList = ({ userId }) => {
                                     }
                                 }}
                             >
-                                <MenuItem onClick={() => handleEditDict(dict.dict_id)}>編集</MenuItem>
-                                <MenuItem onClick={() => handleDeleteClick(dict.dict_id)}>削除</MenuItem>
+                                <MenuItem onClick={() => handleEditDict(dict.id)}>編集</MenuItem>
+                                <MenuItem onClick={() => handleDeleteClick(dict.id)}>削除</MenuItem>
                             </Menu>
                             </button>
                         </div>
@@ -187,7 +193,8 @@ const DictList = ({ userId }) => {
                 <DictionaryEditor 
                     open={isEditorOpen} 
                     handleClose={handleEditorClose} 
-                    dictId={selectedDictId}
+                    selectedDictId={selectedDictId}
+                    onDictionaryAdd={addDictionary}
                 />
             )}
         </div>

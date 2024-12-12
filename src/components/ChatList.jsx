@@ -32,7 +32,7 @@ const ChatList = ({ userId, currentChat, setCurrentChat }) => {
         .catch(error => {
             console.error(error);
             })
-    }, [userId, chatList.length]);
+    }, [userId]);
 
     // メニューボタン 開く
     const handleMenuOpen = (event) => {
